@@ -6,16 +6,29 @@
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        <script src="../scripts/registerCheck.js"> </script>
     </head>
 
     <body>
+        <header>
+            <div class="container">
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-bs-dismiss="alert"> 
+                        &times;
+                    </button>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        </header>
         <main>
             <div class="container-fluid">
                 <form action="#", method="POST">
                     {{ form.hidden_tag() }}
                     <div class="row"> {{ form.email.label }} {{ form.email() }} </div>
-                    <div class="row"> {{ form.username.label }} {{ form.username() }} </div>
-                    <div class="row"> {{ form.password.label }} {{ form.password() }} </div>
+                    <div class="row" id="pass"> {{ form.password.label }} {{ form.password() }} </div>
+                    <div class="row" id="confPass"> {{ form.confirm_password.label }} {{ form.confirm_password() }} </div>
                     <div class="row"> {{ form.submit() }} </div>
                 </form>
                 <div class="row">  
