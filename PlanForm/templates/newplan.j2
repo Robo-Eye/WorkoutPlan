@@ -11,9 +11,12 @@
         <h1>Create a Plan</h1>
         <div class="container-fluid">
             <form action="#" method = "POST">
-               {{wf.hidden_tag()}}{{wf.gender}}{{wf.age}}
-               {{wf.weight}}{{wf.height}}{{wf.areaOfFocus}}
-               {{wf.goals}}{{wf.timeline}}{{wf.submit()}}
+               {{wf.hidden_tag()}}{{wf.gender.label}}{{wf.gender}}
+               {{wf.age.label}}{{wf.age}}{{wf.weight.label}}
+               {{wf.weight}}{{wf.height.label}}{{wf.height}}
+               {{wf.areaOfFocus.label}}{{wf.areaOfFocus}}{{wf.goals.label}}
+               {{wf.goals}}{{wf.timeline.label}}{{wf.timeline}}
+               {{wf.submit()}}
             </form>
         </div>
     </body>

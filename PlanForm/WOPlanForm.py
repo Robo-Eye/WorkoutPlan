@@ -9,25 +9,10 @@ from wtforms.validators import InputRequired
 # having issues with this and sending an arguement to it
 
 
-class Gender(enum.Enum):
-    Male = 'Male'
-    Female = 'Female'
-    PreferNotToSay = 'Prefer Not To Say'
-# consider removing
-
-    def __str__(self):
-        return self.value
-
-
-choices = [
-    (str(choice), choice) for choice in Gender
-]
-
-
 class WorkoutForm(FlaskForm):
     # consider reworking/looking at gender
-    gender = SelectField("Gender: ", Options=choices,
-                         validators=[InputRequired()])
+    gender = SelectField("Gender: ", choices=[('Male', 'Male'), (
+        'Female', 'Female')], validators=[InputRequired()])
     age = IntegerField("Age: ", validators=[InputRequired()])
     weight = IntegerField("Weight: ", validators=[InputRequired()])
     height = IntegerField("Height: ", validators=[InputRequired()])
