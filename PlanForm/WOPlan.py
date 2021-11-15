@@ -18,6 +18,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # class UserForm(db.Model):
+# will add later
 
 
 @app.get('/workoutform/')
