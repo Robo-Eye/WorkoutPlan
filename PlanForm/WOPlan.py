@@ -17,8 +17,17 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# class UserForm(db.Model):
-# will add later
+
+class UserForm(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # Genders parameter throwing and error
+    gender = db.Column(db.Unicode, nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    weight = db.Column(db.Integer, nullable=False)
+    height = db.Column(db.Integer, nullable=False)
+    areaOfFocus = db.Column(db.Unicode, nullable=False)
+    goals = db.Column(db.Unicode, nullable=False)
+    timeline = db.Column(db.Integer, nullable=False)
 
 
 @app.get('/workoutform/')

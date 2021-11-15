@@ -6,6 +6,8 @@ from wtforms.validators import InputRequired
 
 # gender, age, weight, height, area of focus, goals, time frame
 
+# having issues with this and sending an arguement to it
+
 
 class Gender(enum.Enum):
     Male = 'Male'
@@ -23,6 +25,7 @@ choices = [
 
 
 class WorkoutForm(FlaskForm):
+    # consider reworking/looking at gender
     gender = SelectField("Gender: ", Options=choices,
                          validators=[InputRequired()])
     age = IntegerField("Age: ", validators=[InputRequired()])
@@ -31,3 +34,4 @@ class WorkoutForm(FlaskForm):
     areaOfFocus = SelectField("Area of Focus: ", validators=[InputRequired()])
     goals = SelectField("Goals: ", validators=[InputRequired()])
     timeline = SelectField("Timeline: ", validators=[InputRequired()])
+    submit = SubmitField("Submit")
