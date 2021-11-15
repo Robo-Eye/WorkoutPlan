@@ -11,7 +11,7 @@ from wtforms.validators import InputRequired
 
 class WorkoutForm(FlaskForm):
     # consider reworking/looking at gender
-    gender = SelectField("Gender: ", choices=[('Male', 'Male'), (
+    gender = SelectField("Gender: ", choices=[('', 'Select a Gender'), ('Male', 'Male'), (
         'Female', 'Female')], validators=[InputRequired()])
     age = IntegerField("Age: ", validators=[InputRequired()])
     weight = IntegerField("Weight: ", validators=[InputRequired()])
