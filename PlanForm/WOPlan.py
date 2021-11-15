@@ -33,3 +33,22 @@ class UserForm(db.Model):
 def get_blank_form():
     wf = WorkoutForm()
     return render_template("newplan.j2", wf=wf)
+
+
+@app.post('/workoutform/')
+def post_blank_form():
+    wf = WorkoutForm()
+    if wf.validate():
+        completed_form = UserForm(gender=wf.gender.data, age=wf.age.data,
+                                  weight=wf.weight.data, height=wf.height.data,
+                                  areaOfFocus=wf.areaOfFocus.data, goals=wf.goals.data,
+                                  frequency=wf.frequency.data)
+        db.session.add(completed_form)
+        db.session.commit()
+        return redirect(url_for("get_completed_form"))
+
+
+@app.get('/completedform/')
+def get_completed_form():
+    wf = WorkoutForm()
+    pass
