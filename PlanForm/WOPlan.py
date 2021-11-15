@@ -1,5 +1,6 @@
 import flask
 import os
+from WOPlanForm import WorkoutForm
 from flask.app import Flask
 from flask import render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -15,4 +16,3 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
 db = SQLAlchemy(app)
-
