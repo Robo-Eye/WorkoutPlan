@@ -17,12 +17,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-class UserForm(db.Model):
-    
+# class UserForm(db.Model):
 
 
 @app.get('/workoutform/')
 def get_blank_form():
     wf = WorkoutForm()
     return render_template("newplan.j2", wf=wf)
-
