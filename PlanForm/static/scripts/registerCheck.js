@@ -27,13 +27,11 @@ function checkPassword(){
 
     // if they are equal
     if (pass.value === confPass.value){
-        pass.setCustomValidity("");
         confPass.setCustomValidity("");
     }
     // if they are not equal
     else{
         // tell user they don't match
-        pass.setCustomValidity("");
         confPass.setCustomValidity("Passwords do not match");
     }
 
