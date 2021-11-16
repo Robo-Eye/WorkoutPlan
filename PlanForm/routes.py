@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
 from flask_login import UserMixin, LoginManager, login_required
 from flask_login.utils import login_user
+from flask_login import login_user, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 
 import os, sys
@@ -128,6 +129,12 @@ def post_login():
             flash(f"{field}: {error}")
         return redirect(url_for('get_login'))
 
+@app.get('/logout/')
+@login_required
+def get_logout():
+    logout_user()
+    flash('You have been logged out')
+    return redirect(url_for('index'))
 
 @app.route("/home/")
 def home():
