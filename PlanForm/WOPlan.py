@@ -46,6 +46,10 @@ def post_blank_form():
         db.session.add(completed_form)
         db.session.commit()
         return redirect(url_for("get_completed_form"))
+    else:
+        for field, error in wf.errors.items():
+            flash(f"{field}: {error}")
+        return redirect(url_for("get_blank_form"))
 
 
 @app.get('/completedform/')
