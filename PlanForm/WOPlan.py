@@ -29,6 +29,10 @@ class UserForm(db.Model):
     frequency = db.Column(db.Integer, nullable=False)
 
 
+db.drop_all()
+db.create_all()
+
+
 @app.get('/workoutform/')
 def get_blank_form():
     wf = WorkoutForm()
@@ -39,9 +43,12 @@ def get_blank_form():
 def post_blank_form():
     wf = WorkoutForm()
     if wf.validate():
+        str1 = " "
+        areaOfFocusConvert = str1.join(wf.areaOfFocus.data)
+        print(areaOfFocusConvert)
         completed_form = UserForm(gender=wf.gender.data, age=wf.age.data,
                                   weight=wf.weight.data, height=wf.height.data,
-                                  areaOfFocus=wf.areaOfFocus.data, goals=wf.goals.data,
+                                  areaOfFocus=areaOfFocusConvert, goals=wf.goals.data,
                                   frequency=wf.frequency.data)
         db.session.add(completed_form)
         db.session.commit()
