@@ -1,8 +1,9 @@
 from flask import Flask, request, render_template, redirect, url_for, flash
 from flask_login import UserMixin, LoginManager, login_required
-from flask_login.utils import login_user
-from flask_login import login_user, logout_user, current_user
+from flask_login.utils import login_user, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import current_user
+from sqlalchemy.orm.attributes import flag_modified
 
 import os, sys
 scriptdir = os.path.abspath(os.path.dirname(__file__))
@@ -10,8 +11,10 @@ sys.path.append(scriptdir)
 
 from loginForm import LoginForm
 from loginForm import RegisterForm
+from loginForm import UpdateInfo
 
 from hashing_examples import UpdatedHasher
+
 
 # get db and pepper file
 dbfile = os.path.join(scriptdir, 'workoutPlan.sqlite3')
@@ -74,7 +77,7 @@ class User(UserMixin, db.Model):
 
 @app.route("/")
 def index():
-    return redirect(url_for('get_register'))
+    return redirect(url_for('home'))
 
 @app.get("/register/")
 def get_register():
@@ -117,7 +120,8 @@ def post_login():
             # redirect to page they wanted or to home page
             next = request.args.get("next")
             if next is None or not next.startswith('/'):
-                next = url_for('home')
+                next = url_for('loggedInHome')
+
             return redirect(next)
         # if user doesn't exist or password is wrong
         else:
@@ -138,4 +142,35 @@ def get_logout():
 
 @app.route("/home/")
 def home():
-    return "home page goes here"
+    return render_template("home.j2", current_user=current_user)
+
+@app.route("/Home/")
+def loggedInHome():
+    return render_template("loggedInHome.j2", current_user=current_user)
+
+@app.route("/profile/")
+def profile():
+    return render_template("profile.j2")
+
+@app.get("/changeInfo/")
+def get_changeInfo():
+    form = UpdateInfo()
+    return render_template("updateInfo.j2", form=form)
+
+@app.post("/changeInfo/")
+def post_changeInfo():
+    form = UpdateInfo()
+    if form.validate():
+        # check if existing account has this email
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is None:
+            flash("The Old Email that was submitted does not match your acctount")
+            return redirect(url_for('get_changeInfo'))
+        # username and email are both not already being used, create new user
+        user.email = form.newEmail.data
+        db.session.commit()
+        return render_template("profile.j2", form=form)
+    else:
+        for field, error in form.errors.items():
+            flash(f"{field}: {error}")
+        return redirect(url_for('get_changeInfo'))
