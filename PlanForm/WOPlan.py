@@ -55,4 +55,4 @@ def post_blank_form():
 @app.get('/completedform/')
 def get_completed_form():
     wf = WorkoutForm()
-    pass
+    return render_template("plancreated.j2", wf=wf)

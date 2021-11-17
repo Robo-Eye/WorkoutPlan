@@ -13,7 +13,7 @@ class WorkoutForm(FlaskForm):
     areaOfFocus = SelectField("Area of Focus: ", choices=[('', 'Select an Area of Focus'), ('Abs', 'Core Improvement'), ('Chest', 'Chest'), (
         'Shoulders', 'Shoulders'), ('Back', 'Back'), ('Biceps', 'Biceps'), ('Triceps', 'Triceps'), ('Legs', 'Legs'), ('Cardio', 'Cardio')], validators=[InputRequired()])
     goals = SelectField("Goals: ", choices=[('', 'Select a Goal'), ('Endurance', 'Increase Endurance'), (
-        'Weight', 'Increase Strength'), ('Bodybuilding', 'Bodybuilding')], validators=[InputRequired()])
+        'Strength', 'Increase Strength'), ('Bodybuilding', 'Bodybuilding')], validators=[InputRequired()])
     frequency = SelectField("Times per week: ", choices=[
                             ('', 'Select a Frequency'), (1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5'), (6, '6'), (7, '7')], validators=[InputRequired()])
     submit = SubmitField("Submit")
