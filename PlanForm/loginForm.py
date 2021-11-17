@@ -15,3 +15,9 @@ class RegisterForm(FlaskForm):
     confirm_password = PasswordField("Confirm Password: ", validators=[InputRequired(), EqualTo("password")])
 
     submit = SubmitField("Register")
+
+class UpdateInfo(FlaskForm):
+    email = EmailField("Old Email: ", validators=[InputRequired(), Email()])
+    newEmail = EmailField("New Email: ", validators=[InputRequired(), Email()])
+
+    submit = SubmitField("Update")
