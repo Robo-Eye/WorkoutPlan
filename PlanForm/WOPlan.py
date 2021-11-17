@@ -28,22 +28,40 @@ class UserForm(db.Model):
     goals = db.Column(db.Unicode, nullable=False)
     frequency = db.Column(db.Integer, nullable=False)
 
+class Abs(db.Model):
+    workouts = db.Column(db.Unicode)
+    link_to_wo= db.Column(db.Unicode)
 
-class Workouts(db.Model):
-    abs = db.Column(db.Unicode)
-    chest = db.Column(db.Unicode)
-    shoulders = db.Column(db.Unicode)
-    back = db.Column(db.Unicode)
-    biceps = db.Column(db.Unicode)
-    triceps = db.Column(db.Unicode)
-    legs = db.Column(db.Unicode)
+class Chest(db.Model):
+    workouts = db.Column(db.Unicode)
+    link_to_wo= db.Column(db.Unicode)
+
+class Shoulders(db.Model):
+    workouts = db.Column(db.Unicode)
+    link_to_wo= db.Column(db.Unicode)
+
+class Back(db.Model):
+    workouts = db.Column(db.Unicode)
+    link_to_wo= db.Column(db.Unicode)
+
+class Biceps(db.Model):
+    workouts = db.Column(db.Unicode)
+    link_to_wo= db.Column(db.Unicode)
+
+class Triceps(db.Model):
+    workouts = db.Column(db.Unicode)
+    link_to_wo= db.Column(db.Unicode)
+
+class Legs(db.Model):
+    workouts = db.Column(db.Unicode)
+    link_to_wo= db.Column(db.Unicode)
 
 
 db.drop_all()
 db.create_all()
 
 multiple_instances = [
-    Workouts("Ab crunches")
+  
 ]
 
 @app.get('/workoutform/')
