@@ -150,7 +150,8 @@ multiple_triceps = [
             link_to_wo="https://youtu.be/QXzhjRnYRT0"),
     Triceps(workouts="Seated overhead extension",
             link_to_wo="https://youtu.be/YbX7Wd8jQ-Q"),
-    Triceps(workouts="Tricep kickbacks", link_to_wo="https://www.youtube.com/watch?v=bxPoVw8_khE),
+    Triceps(workouts="Tricep kickbacks",
+            link_to_wo="https://www.youtube.com/watch?v=bxPoVw8_khE"),
     Triceps(workouts="Close grip pushups",
             link_to_wo="https://www.youtube.com/watch?v=yy_stTZs5-4)")
 ]
@@ -186,7 +187,6 @@ def post_blank_form():
     if wf.validate():
         str1 = " "
         areaOfFocusConvert = str1.join(wf.areaOfFocus.data)
-        print(areaOfFocusConvert)
         completed_form = UserForm(gender=wf.gender.data, age=wf.age.data,
                                   weight=wf.weight.data, height=wf.height.data,
                                   areaOfFocus=areaOfFocusConvert, goals=wf.goals.data,
@@ -203,4 +203,14 @@ def post_blank_form():
 @app.get('/completedform/')
 def get_completed_form():
     wf = WorkoutForm()
+    selectedAOF = UserForm.query.all()
+    groupAOF = inputAOF.areaOfFocus
+    resultAOF = groupAOF.split()
+    for x in resultAOF:
+        if (x == wf)  # need to fix
     return render_template("plancreated.j2", wf=wf)
+
+
+@app.post('/completedform/')
+def post_completed_form():
+    pass
