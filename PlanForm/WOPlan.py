@@ -203,11 +203,6 @@ def post_blank_form():
 @app.get('/completedform/')
 def get_completed_form():
     wf = WorkoutForm()
-    selectedAOF = UserForm.query.all()
-    groupAOF = inputAOF.areaOfFocus
-    resultAOF = groupAOF.split()
-    for x in resultAOF:
-        if (x == wf)  # need to fix
     return render_template("plancreated.j2", wf=wf)
 
 
