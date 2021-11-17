@@ -118,42 +118,57 @@ db.session.add_all(multiple_shoulders)
 db.session.commit()
 
 multiple_back = [
-    Back(workouts="", link_to_wo=""),
-    Back(workouts="", link_to_wo=""),
-    Back(workouts="", link_to_wo=""),
-    Back(workouts="", link_to_wo=""),
-    Back(workouts="", link_to_wo="")
+    Back(workouts="Sumo deadlift", link_to_wo="https://youtu.be/1v4r9hht_K4"),
+    Back(workouts="Bent over rows", link_to_wo="https://youtu.be/9efgcAjQe7E"),
+    Back(workouts="T-bar rows", link_to_wo="https://youtu.be/j3Igk5nyZE4"),
+    Back(workouts="Single-arm rows", link_to_wo="https://youtu.be/pYcpY20QaE8"),
+    Back(workouts="Lat pulldowns – wide grip",
+         link_to_wo="https://youtu.be/CAwf7n6Luuc"),
+    Back(workouts="Chin-ups", link_to_wo="https://youtu.be/brhRXlOhsAM")
 ]
 db.session.add_all(multiple_back)
 db.session.commit()
 
 multiple_biceps = [
-    Biceps(workouts="", link_to_wo=""),
-    Biceps(workouts="", link_to_wo=""),
-    Biceps(workouts="", link_to_wo=""),
-    Biceps(workouts="", link_to_wo=""),
-    Biceps(workouts="", link_to_wo="")
+    Biceps(workouts="E-Z bar bicep curl",
+           link_to_wo="https://www.youtube.com/watch?v=zG2xJ0Q5QtI"),
+    Biceps(workouts="Barbell preacher curl",
+           link_to_wo="https://www.youtube.com/watch?v=nbcgEmZ0Be4"),
+    Biceps(workouts="Dumbbell bicep curl",
+           link_to_wo="https://youtu.be/sAq_ocpRh_I"),
+    Biceps(workouts="Hammer curls", link_to_wo="https://youtu.be/zC3nLlEvin4"),
+    Biceps(workouts="Incline bench dumbbell curl",
+           link_to_wo="https://youtu.be/soxrZlIl35U")
 ]
 db.session.add_all(multiple_biceps)
 db.session.commit()
 
 multiple_triceps = [
-    Triceps(workouts="", link_to_wo=""),
-    Triceps(workouts="", link_to_wo=""),
-    Triceps(workouts="", link_to_wo=""),
-    Triceps(workouts="", link_to_wo=""),
-    Triceps(workouts="", link_to_wo="")
+    Triceps(workouts="Close-grip bench press",
+            link_to_wo="https://youtu.be/cXbSJHtjrQQ"),
+    Triceps(workouts="Skull crushers",
+            link_to_wo="https://youtu.be/QXzhjRnYRT0"),
+    Triceps(workouts="Seated overhead extension",
+            link_to_wo="https://youtu.be/YbX7Wd8jQ-Q"),
+    Triceps(workouts="Tricep kickbacks", link_to_wo="https://www.youtube.com/watch?v=bxPoVw8_khE),
+    Triceps(workouts="Close grip pushups",
+            link_to_wo="https://www.youtube.com/watch?v=yy_stTZs5-4)")
 ]
 db.session.add_all(multiple_triceps)
 db.session.commit()
 
 multiple_legs = [
-    Legs(workouts="", link_to_wo=""),
-    Legs(workouts="", link_to_wo=""),
-    Legs(workouts="", link_to_wo=""),
-    Legs(workouts="", link_to_wo=""),
-    Legs(workouts="", link_to_wo=""),
-    Legs(workouts="", link_to_wo="")
+    Legs(workouts="Barbell back squats",
+         link_to_wo="https://youtu.be/1oed-UmAxFs"),
+    Legs(workouts="Dumbbell Bulgarian split squat",
+         link_to_wo="https://youtu.be/2C-uNgKwPLE"),
+    Legs(workouts="Goblet squat",
+         link_to_wo="https://www.youtube.com/watch?t=2s&v=MeIiIdhvXT4"),
+    Legs(workouts="Standing calf raises",
+         link_to_wo="https://www.youtube.com/watch?v=wxwY7GXxL4k"),
+    Legs(workouts="Leg press", link_to_wo="https://youtu.be/IZxyjW7MPJQ"),
+    Legs(workouts="Leg extension",
+         link_to_wo="https://www.youtube.com/watch?t=21s&v=YyvSfVjQeL0")
 ]
 db.session.add_all(multiple_legs)
 db.session.commit()
