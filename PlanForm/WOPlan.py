@@ -29,9 +29,22 @@ class UserForm(db.Model):
     frequency = db.Column(db.Integer, nullable=False)
 
 
+class Workouts(db.Model):
+    abs = db.Column(db.Unicode)
+    chest = db.Column(db.Unicode)
+    shoulders = db.Column(db.Unicode)
+    back = db.Column(db.Unicode)
+    biceps = db.Column(db.Unicode)
+    triceps = db.Column(db.Unicode)
+    legs = db.Column(db.Unicode)
+
+
 db.drop_all()
 db.create_all()
 
+multiple_instances = [
+    Workouts("Ab crunches")
+]
 
 @app.get('/workoutform/')
 def get_blank_form():
