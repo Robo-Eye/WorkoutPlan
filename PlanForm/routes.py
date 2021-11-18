@@ -397,6 +397,9 @@ def home():
 def loggedInHome():
     return render_template("loggedInHome.j2", current_user=current_user)
 
+@app.route("/workouts/")
+def workoutlist():
+    return
 
 @app.route("/profile/")
 def profile():

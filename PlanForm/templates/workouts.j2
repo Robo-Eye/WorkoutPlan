@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title> New Plan </title>
+        <title> Workout List </title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
@@ -18,20 +18,4 @@
                 </div>
             {% endfor %}
         </div>
-        <h1>Your New Workout Plan</h1>
-        <table>
-            
-            <tr>
-            {%for x in listAOF%}
-                {%if x.0%}
-                <th>|{{x.1|capitalize}}|</th>
-                {%endif%}
-            {%endfor%}
-            </tr>
-
-        </table>
-        <br> <a href = "/Home/"> Return to Home Page </a> <br>
-        <a href = "/profile/">Profile Page</a>
-        <a href = "/logout/">Logout</a>
-    </body>
-</html>
+        <h1>Workout List</h1>
