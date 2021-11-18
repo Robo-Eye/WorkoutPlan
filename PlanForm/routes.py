@@ -269,9 +269,10 @@ def post_blank_form():
 @app.get('/completedform/')
 def get_completed_form():
     wf = WorkoutForm()
-    selectedAOF = db.session.query(UserForm.areaOfFocus)
-    groupAOF = str(selectedAOF)
-    resultAOF = groupAOF.split()
+    selectedAOF = db.session.query(UserForm.areaOfFocus).all()
+    stringAOF = selectedAOF[0]
+    stringAOF = stringAOF[0]
+    resultAOF = stringAOF.split()
     abs = False
     chest = False
     back = False
@@ -282,7 +283,6 @@ def get_completed_form():
     for x in resultAOF:
         if (x.lower() == "abs"):
             abs = True
-            print(abs)
         if (x.lower() == "chest"):
             chest = True
         if (x.lower() == "back"):
@@ -295,9 +295,8 @@ def get_completed_form():
             shoulders = True
         if (x.lower() == "legs"):
             legs = True
-        print(x)
-        completed_form = Workouts(abs=abs, chest=chest, back=back,
-                                  biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
+    completed_form = Workouts(abs=abs, chest=chest, back=back,
+                              biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
     db.session.add(completed_form)
     db.session.commit()
     return render_template("plancreated.j2", wf=wf)
