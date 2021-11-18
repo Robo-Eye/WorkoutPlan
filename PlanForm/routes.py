@@ -252,6 +252,7 @@ def post_blank_form():
     if wf.validate():
         str1 = " "
         areaOfFocusConvert = str1.join(wf.areaOfFocus.data)
+        print(areaOfFocusConvert)
         completed_form = UserForm(gender=wf.gender.data, age=wf.age.data,
                                   weight=wf.weight.data, height=wf.height.data,
                                   areaOfFocus=areaOfFocusConvert, goals=wf.goals.data,
@@ -269,7 +270,7 @@ def post_blank_form():
 def get_completed_form():
     wf = WorkoutForm()
     selectedAOF = db.session.query(UserForm.areaOfFocus)
-    groupAOF = selectedAOF
+    groupAOF = str(selectedAOF)
     resultAOF = groupAOF.split()
     abs = False
     chest = False
@@ -297,7 +298,7 @@ def get_completed_form():
         print(x)
         completed_form = Workouts(abs=abs, chest=chest, back=back,
                                   biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
-    db.session.add_all(completed_form)
+    db.session.add(completed_form)
     db.session.commit()
     return render_template("plancreated.j2", wf=wf)
 
