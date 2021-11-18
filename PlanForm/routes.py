@@ -399,7 +399,7 @@ def loggedInHome():
 
 @app.route("/workouts/")
 def workoutlist():
-    return
+    return render_template("workouts.j2", Abs = Abs)
 
 @app.route("/profile/")
 def profile():
