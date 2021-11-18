@@ -20,14 +20,19 @@
         </div>
         <h1>Your New Workout Plan</h1>
         <table>
-            {%for x in listAOF%}
-            <tr>
-                {%if x.0%}
-                <th>{{x.1}}</th>
-                {%endif%}
-            </tr>
-            {%endfor%}
             
+            <tr>
+            {%for x in listAOF%}
+                {%if x.0%}
+                <th>|{{x.1|capitalize}}|</th>
+                {%endif%}
+            {%endfor%}
+            </tr>
+            
+
         </table>
+        <br> <a href = "/Home/"> Return to Home Page </a> <br>
+        <a href = "/profile/">Profile Page</a>
+        <a href = "/logout/">Logout</a>
     </body>
 </html>

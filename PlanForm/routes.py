@@ -188,8 +188,7 @@ multiple_back = [
     Back(workouts="T-bar rows", link_to_wo="https://youtu.be/j3Igk5nyZE4"),
     Back(workouts="Single-arm rows", link_to_wo="https://youtu.be/pYcpY20QaE8"),
     Back(workouts="Lat pulldowns – wide grip",
-         link_to_wo="https://youtu.be/CAwf7n6Luuc"),
-    Back(workouts="Chin-ups", link_to_wo="https://youtu.be/brhRXlOhsAM")
+         link_to_wo="https://youtu.be/CAwf7n6Luuc")
 ]
 db.session.add_all(multiple_back)
 db.session.commit()
@@ -228,8 +227,6 @@ multiple_legs = [
          link_to_wo="https://youtu.be/1oed-UmAxFs"),
     Legs(workouts="Dumbbell Bulgarian split squat",
          link_to_wo="https://youtu.be/2C-uNgKwPLE"),
-    Legs(workouts="Goblet squat",
-         link_to_wo="https://www.youtube.com/watch?t=2s&v=MeIiIdhvXT4"),
     Legs(workouts="Standing calf raises",
          link_to_wo="https://www.youtube.com/watch?v=wxwY7GXxL4k"),
     Legs(workouts="Leg press", link_to_wo="https://youtu.be/IZxyjW7MPJQ"),
