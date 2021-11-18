@@ -299,7 +299,9 @@ def get_completed_form():
                               biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
     db.session.add(completed_form)
     db.session.commit()
-    return render_template("plancreated.j2", wf=wf)
+    listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
+               (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
+    return render_template("plancreated.j2", wf=wf, listAOF=listAOF)
 
 
 @app.post('/completedform/')

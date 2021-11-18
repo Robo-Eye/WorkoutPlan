@@ -19,7 +19,15 @@
             {% endfor %}
         </div>
         <h1>Your New Workout Plan</h1>
-        
-
+        <table>
+            {%for x in listAOF%}
+            <tr>
+                {%if x.0%}
+                <th>{{x.1}}</th>
+                {%endif%}
+            </tr>
+            {%endfor%}
+            
+        </table>
     </body>
 </html>
