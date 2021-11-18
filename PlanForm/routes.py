@@ -1,3 +1,4 @@
+from sqlalchemy.orm import relationship
 from hashing_examples import UpdatedHasher
 from loginForm import UpdateInfo
 from loginForm import RegisterForm
@@ -78,6 +79,7 @@ class UserForm(db.Model):
     areaOfFocus = db.Column(db.Unicode, nullable=False)
     goals = db.Column(db.Unicode, nullable=False)
     frequency = db.Column(db.Integer, nullable=False)
+    #workouts = relationship('Workouts', backref='userform')
 
 
 class Abs(db.Model):
@@ -122,7 +124,19 @@ class Legs(db.Model):
     link_to_wo = db.Column(db.Unicode)
 
 
-db.drop_all()
+class Workouts(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    abs = db.Column(db.Boolean)
+    chest = db.Column(db.Boolean)
+    back = db.Column(db.Boolean)
+    biceps = db.Column(db.Boolean)
+    triceps = db.Column(db.Boolean)
+    shoulders = db.Column(db.Boolean)
+    legs = db.Column(db.Boolean)
+    #userform_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
+
+
+db.drop_all()  # for testing
 db.create_all()
 
 multiple_abs = [
@@ -254,6 +268,37 @@ def post_blank_form():
 @app.get('/completedform/')
 def get_completed_form():
     wf = WorkoutForm()
+    selectedAOF = db.session.query(UserForm.areaOfFocus)
+    groupAOF = selectedAOF
+    resultAOF = groupAOF.split()
+    abs = False
+    chest = False
+    back = False
+    biceps = False
+    triceps = False
+    shoulders = False
+    legs = False
+    for x in resultAOF:
+        if (x.lower() == "abs"):
+            abs = True
+            print(abs)
+        if (x.lower() == "chest"):
+            chest = True
+        if (x.lower() == "back"):
+            back = True
+        if (x.lower() == "biceps"):
+            biceps = True
+        if (x.lower() == "triceps"):
+            triceps = True
+        if (x.lower() == "shoulders"):
+            shoulders = True
+        if (x.lower() == "legs"):
+            legs = True
+        print(x)
+        completed_form = Workouts(abs=abs, chest=chest, back=back,
+                                  biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
+    db.session.add_all(completed_form)
+    db.session.commit()
     return render_template("plancreated.j2", wf=wf)
 
 
