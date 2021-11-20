@@ -277,6 +277,7 @@ def get_completed_form():
     triceps = False
     shoulders = False
     legs = False
+
     for x in resultAOF:
         if (x.lower() == "abs"):
             abs = True
@@ -298,6 +299,7 @@ def get_completed_form():
     db.session.commit()
     listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
                (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
+    listOfWO = (Abs, Chest, Back, Biceps, Triceps, Shoulders, Legs)
     return render_template("plancreated.j2", wf=wf, listAOF=listAOF)
 
 
@@ -397,9 +399,11 @@ def home():
 def loggedInHome():
     return render_template("loggedInHome.j2", current_user=current_user)
 
+
 @app.route("/workouts/")
 def workoutlist():
-    return render_template("workouts.j2", Abs = Abs)
+    return render_template("workouts.j2", Abs=Abs)
+
 
 @app.route("/profile/")
 def profile():
