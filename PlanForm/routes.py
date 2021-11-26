@@ -299,7 +299,6 @@ def get_completed_form():
     db.session.commit()
     listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
                (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
-    listOfWO = (Abs, Chest, Back, Biceps, Triceps, Shoulders, Legs)
     return render_template("plancreated.j2", wf=wf, listAOF=listAOF)
 
 
@@ -402,7 +401,9 @@ def loggedInHome():
 
 @app.route("/workouts/")
 def workoutlist():
-    return render_template("workouts.j2", Abs=Abs)
+    listOfWO = (Abs.query.all(), Chest.query.all(), Back.query.all(), Biceps.query.all(
+    ), Triceps.query.all(), Shoulders.query.all(), Legs.query.all())
+    return render_template("workouts.j2", listOfWO=listOfWO)
 
 
 @app.route("/profile/")
