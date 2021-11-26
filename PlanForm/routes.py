@@ -401,9 +401,8 @@ def loggedInHome():
 
 @app.route("/workouts/")
 def workoutlist():
-    listOfWO = (Abs.query.all(), Chest.query.all(), Back.query.all(), Biceps.query.all(
-    ), Triceps.query.all(), Shoulders.query.all(), Legs.query.all())
-    return render_template("workouts.j2", listOfWO=listOfWO)
+    return render_template("workouts.j2", abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
+    ), bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
 
 
 @app.route("/profile/")

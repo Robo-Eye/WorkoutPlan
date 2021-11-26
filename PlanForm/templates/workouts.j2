@@ -21,15 +21,73 @@
         <h1>Workout List</h1>
         <table>
             <tr>
-                <th>|Abs|</th>
-                <th>|Chest|</th>
-                <th>|Back|</th>
-                <th>|Biceps|</th>
-                <th>|Triceps|</th>
-                <th>|Shoulders|</th>
-                <th>|Legs|</th>
+                <th>Abs</th>
             </tr>
-            
+            {%for x in abslist%}
+            <tr>
+                <td><a href = "{{x.1}}">{{x.0}}</a></td>
+            </tr>        
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>Chest</th>
+            </tr>
+            {%for x in chestlist%}
+            <tr>
+                <td><a href = "{{x.1}}">{{x.0}}</a></td>
+            </tr>        
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>Back</th>
+            </tr>
+            {%for x in backlist%}
+            <tr>
+                <td><a href = "{{x.1}}">{{x.0}}</a></td>
+            </tr>        
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>Biceps</th>
+            </tr>
+            {%for x in bicepslist%}
+            <tr>
+                <td><a href = "{{x.1}}">{{x.0}}</a></td>
+            </tr>        
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>Triceps</th>
+            </tr>
+            {%for x in tricepslist%}
+            <tr>
+                <td><a href = "{{x.1}}">{{x.0}}</a></td>
+            </tr>        
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>Shoulders</th>
+            </tr>
+            {%for x in shoulderslist%}
+            <tr>
+                <td><a href = "{{x.1}}">{{x.0}}</a></td>
+            </tr>        
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                <th>Legs</th>
+            </tr>
+            {%for x in legslist%}
+            <tr>
+                <td><a href = "{{x.1}}">{{x.0}}</a></td>
+            </tr>        
+            {% endfor %}
         </table>
         <a href = "/register/">Create Personalized Workout</a>
         <br>
