@@ -238,14 +238,12 @@ db.session.commit()
 
 
 @app.get('/workoutform/')
-@login_required
 def get_blank_form():
     wf = WorkoutForm()
     return render_template("newplan.j2", wf=wf)
 
 
 @app.post('/workoutform/')
-@login_required
 def post_blank_form():
     wf = WorkoutForm()
     if wf.validate():
@@ -266,7 +264,6 @@ def post_blank_form():
 
 
 @app.get('/completedform/')
-@login_required
 def get_completed_form():
     wf = WorkoutForm()
     selectedAOF = db.session.query(UserForm.areaOfFocus).all()
@@ -306,9 +303,19 @@ def get_completed_form():
 
 
 @app.post('/completedform/')
-@login_required
 def post_completed_form():
     pass
+
+
+# # refresh db and add test data
+# db.drop_all()
+# db.create_all()
+
+# user1 = User(password="meat", email="strawhat@grandline.com")
+# user2 = User(password="light", email="misa@gmail.com")
+
+# db.session.add_all((user1, user2))
+# db.session.commit()
 
 
 @app.route("/")
@@ -330,7 +337,7 @@ def post_register():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None:
             flash("This email is already in use")
-            return redirect(url_for('get_register'))
+            return redirect(url_for('get_reigster'))
         # username and email are both not already being used, create new user
         db.session.add(
             User(password=form.password.data, email=form.email.data))
@@ -360,7 +367,7 @@ def post_login():
             # redirect to page they wanted or to home page
             next = request.args.get("next")
             if next is None or not next.startswith('/'):
-                next = url_for('home')
+                next = url_for('loggedInHome')
 
             return redirect(next)
         # if user doesn't exist or password is wrong
@@ -378,14 +385,18 @@ def post_login():
 @login_required
 def get_logout():
     logout_user()
-    # flash('You have been logged out')
+    flash('You have been logged out')
     return redirect(url_for('index'))
 
 
 @app.route("/home/")
 def home():
-    return render_template("home.j2", current_user=current_user, 
-        logoutLink=url_for('get_logout'), loginLink=url_for('get_login'), registerLink=url_for('get_register'))
+    return render_template("home.j2", current_user=current_user)
+
+
+@app.route("/Home/")
+def loggedInHome():
+    return render_template("loggedInHome.j2", current_user=current_user)
 
 
 @app.route("/workouts/")
@@ -395,7 +406,6 @@ def workoutlist():
 
 
 @app.route("/profile/")
-@login_required
 def profile():
     return render_template("profile.j2")
 
