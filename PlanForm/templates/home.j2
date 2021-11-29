@@ -5,9 +5,22 @@
 	<title>Home</title>
 </head>
 <body>
-	<h1>Welcome Anonymous User!</h1>
+    {% if current_user.is_authenticated %}
+	    <h1>Welcome {{current_user.email}}! You are logged in!</h1>
+    {% else %}
+        <h1>Welcome Anonymous User!</h1>
+    {% endif %}
+
     <a href = "/workouts/">List of all workouts</a>
-    <a href = "/register/">Create Personalized Workout</a>
-    <a href = "/login/">Login</a>
+    <a href = "/workoutform/">Create Personalized Workout</a>
+    <a href = "/profile/">Profile Page</a>
+
+    {% if current_user.is_authenticated %}
+        <a href = "{{logoutLink}}">Logout</a>
+    {% else %}
+        <a href = "{{registerLink}}"> Register </a>
+        <a href = "{{loginLink}}">Login</a>
+    {% endif %}
+
 </body>
 </html>
