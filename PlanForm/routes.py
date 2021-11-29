@@ -136,114 +136,116 @@ class Workouts(db.Model):
     #userform_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
 
 
-db.drop_all()  # for testing
-db.create_all()
+# db.drop_all()  # for testing
+# db.create_all()
 
-multiple_abs = [
-    Abs(workouts="Ab crunches",
-        link_to_wo="https://www.youtube.com/watch?v=Xyd_fa5zoEU"),
-    Abs(workouts="Russian twists",
-        link_to_wo="https://www.youtube.com/watch?v=JyUqwkVpsi8"),
-    Abs(workouts="Plank hold",
-        link_to_wo="https://www.youtube.com/watch?v=Oi9pmH45W7A"),
-    Abs(workouts="Leg raises",
-        link_to_wo="https://www.youtube.com/watch?v=ttdkm6ESUjI"),
-    Abs(workouts="Knee raises",
-        link_to_wo="https://www.youtube.com/watch?v=KNzJ3GuIpB8")
-]
-db.session.add_all(multiple_abs)
-db.session.commit()
-multiple_chest = [
-    Chest(workouts="Flat barbell bench press",
-          link_to_wo="https://www.youtube.com/watch?v=-MAABwVKxok"),
-    Chest(workouts="Dumbbell chest fly",
-          link_to_wo="https://youtu.be/eozdVDA78K0"),
-    Chest(workouts="Dumbbell pullover",
-          link_to_wo="https://youtu.be/tpLnfSQJ0gg"),
-    Chest(workouts="Flat machine bench press",
-          link_to_wo="https://youtu.be/xUm0BiZCWlQ"),
-    Chest(workouts="Cable crossover",
-          link_to_wo="https://www.youtube.com/watch?v=taI4XduLpTk")
-]
-db.session.add_all(multiple_chest)
-db.session.commit()
-multiple_shoulders = [
-    Shoulders(workouts="Seated barbell shoulder press",
-              link_to_wo="https://www.youtube.com/watch?t=4s&v=oBGeXxnigsQ"),
-    Shoulders(workouts="Seated dumbbell shoulder press",
-              link_to_wo="https://youtu.be/qEwKCR5JCog"),
-    Shoulders(workouts="Arnold press",
-              link_to_wo="https://youtu.be/6Z15_WdXmVw"),
-    Shoulders(workouts="Dumbbell lateral raises",
-              link_to_wo="https://youtu.be/3VcKaXpzqRo"),
-    Shoulders(workouts="Machine shoulder press",
-              link_to_wo="https://www.youtube.com/watch?t=2s&v=Wqq43dKW1TU")
-]
-db.session.add_all(multiple_shoulders)
-db.session.commit()
+# multiple_abs = [
+#     Abs(workouts="Ab crunches",
+#         link_to_wo="https://www.youtube.com/watch?v=Xyd_fa5zoEU"),
+#     Abs(workouts="Russian twists",
+#         link_to_wo="https://www.youtube.com/watch?v=JyUqwkVpsi8"),
+#     Abs(workouts="Plank hold",
+#         link_to_wo="https://www.youtube.com/watch?v=Oi9pmH45W7A"),
+#     Abs(workouts="Leg raises",
+#         link_to_wo="https://www.youtube.com/watch?v=ttdkm6ESUjI"),
+#     Abs(workouts="Knee raises",
+#         link_to_wo="https://www.youtube.com/watch?v=KNzJ3GuIpB8")
+# ]
+# db.session.add_all(multiple_abs)
+# db.session.commit()
+# multiple_chest = [
+#     Chest(workouts="Flat barbell bench press",
+#           link_to_wo="https://www.youtube.com/watch?v=-MAABwVKxok"),
+#     Chest(workouts="Dumbbell chest fly",
+#           link_to_wo="https://youtu.be/eozdVDA78K0"),
+#     Chest(workouts="Dumbbell pullover",
+#           link_to_wo="https://youtu.be/tpLnfSQJ0gg"),
+#     Chest(workouts="Flat machine bench press",
+#           link_to_wo="https://youtu.be/xUm0BiZCWlQ"),
+#     Chest(workouts="Cable crossover",
+#           link_to_wo="https://www.youtube.com/watch?v=taI4XduLpTk")
+# ]
+# db.session.add_all(multiple_chest)
+# db.session.commit()
+# multiple_shoulders = [
+#     Shoulders(workouts="Seated barbell shoulder press",
+#               link_to_wo="https://www.youtube.com/watch?t=4s&v=oBGeXxnigsQ"),
+#     Shoulders(workouts="Seated dumbbell shoulder press",
+#               link_to_wo="https://youtu.be/qEwKCR5JCog"),
+#     Shoulders(workouts="Arnold press",
+#               link_to_wo="https://youtu.be/6Z15_WdXmVw"),
+#     Shoulders(workouts="Dumbbell lateral raises",
+#               link_to_wo="https://youtu.be/3VcKaXpzqRo"),
+#     Shoulders(workouts="Machine shoulder press",
+#               link_to_wo="https://www.youtube.com/watch?t=2s&v=Wqq43dKW1TU")
+# ]
+# db.session.add_all(multiple_shoulders)
+# db.session.commit()
 
-multiple_back = [
-    Back(workouts="Sumo deadlift", link_to_wo="https://youtu.be/1v4r9hht_K4"),
-    Back(workouts="Bent over rows", link_to_wo="https://youtu.be/9efgcAjQe7E"),
-    Back(workouts="T-bar rows", link_to_wo="https://youtu.be/j3Igk5nyZE4"),
-    Back(workouts="Single-arm rows", link_to_wo="https://youtu.be/pYcpY20QaE8"),
-    Back(workouts="Lat pulldowns – wide grip",
-         link_to_wo="https://youtu.be/CAwf7n6Luuc")
-]
-db.session.add_all(multiple_back)
-db.session.commit()
+# multiple_back = [
+#     Back(workouts="Sumo deadlift", link_to_wo="https://youtu.be/1v4r9hht_K4"),
+#     Back(workouts="Bent over rows", link_to_wo="https://youtu.be/9efgcAjQe7E"),
+#     Back(workouts="T-bar rows", link_to_wo="https://youtu.be/j3Igk5nyZE4"),
+#     Back(workouts="Single-arm rows", link_to_wo="https://youtu.be/pYcpY20QaE8"),
+#     Back(workouts="Lat pulldowns – wide grip",
+#          link_to_wo="https://youtu.be/CAwf7n6Luuc")
+# ]
+# db.session.add_all(multiple_back)
+# db.session.commit()
 
-multiple_biceps = [
-    Biceps(workouts="E-Z bar bicep curl",
-           link_to_wo="https://www.youtube.com/watch?v=zG2xJ0Q5QtI"),
-    Biceps(workouts="Barbell preacher curl",
-           link_to_wo="https://www.youtube.com/watch?v=nbcgEmZ0Be4"),
-    Biceps(workouts="Dumbbell bicep curl",
-           link_to_wo="https://youtu.be/sAq_ocpRh_I"),
-    Biceps(workouts="Hammer curls", link_to_wo="https://youtu.be/zC3nLlEvin4"),
-    Biceps(workouts="Incline bench dumbbell curl",
-           link_to_wo="https://youtu.be/soxrZlIl35U")
-]
-db.session.add_all(multiple_biceps)
-db.session.commit()
+# multiple_biceps = [
+#     Biceps(workouts="E-Z bar bicep curl",
+#            link_to_wo="https://www.youtube.com/watch?v=zG2xJ0Q5QtI"),
+#     Biceps(workouts="Barbell preacher curl",
+#            link_to_wo="https://www.youtube.com/watch?v=nbcgEmZ0Be4"),
+#     Biceps(workouts="Dumbbell bicep curl",
+#            link_to_wo="https://youtu.be/sAq_ocpRh_I"),
+#     Biceps(workouts="Hammer curls", link_to_wo="https://youtu.be/zC3nLlEvin4"),
+#     Biceps(workouts="Incline bench dumbbell curl",
+#            link_to_wo="https://youtu.be/soxrZlIl35U")
+# ]
+# db.session.add_all(multiple_biceps)
+# db.session.commit()
 
-multiple_triceps = [
-    Triceps(workouts="Close-grip bench press",
-            link_to_wo="https://youtu.be/cXbSJHtjrQQ"),
-    Triceps(workouts="Skull crushers",
-            link_to_wo="https://youtu.be/QXzhjRnYRT0"),
-    Triceps(workouts="Seated overhead extension",
-            link_to_wo="https://youtu.be/YbX7Wd8jQ-Q"),
-    Triceps(workouts="Tricep kickbacks",
-            link_to_wo="https://www.youtube.com/watch?v=bxPoVw8_khE"),
-    Triceps(workouts="Close grip pushups",
-            link_to_wo="https://www.youtube.com/watch?v=yy_stTZs5-4)")
-]
-db.session.add_all(multiple_triceps)
-db.session.commit()
+# multiple_triceps = [
+#     Triceps(workouts="Close-grip bench press",
+#             link_to_wo="https://youtu.be/cXbSJHtjrQQ"),
+#     Triceps(workouts="Skull crushers",
+#             link_to_wo="https://youtu.be/QXzhjRnYRT0"),
+#     Triceps(workouts="Seated overhead extension",
+#             link_to_wo="https://youtu.be/YbX7Wd8jQ-Q"),
+#     Triceps(workouts="Tricep kickbacks",
+#             link_to_wo="https://www.youtube.com/watch?v=bxPoVw8_khE"),
+#     Triceps(workouts="Close grip pushups",
+#             link_to_wo="https://www.youtube.com/watch?v=yy_stTZs5-4)")
+# ]
+# db.session.add_all(multiple_triceps)
+# db.session.commit()
 
-multiple_legs = [
-    Legs(workouts="Barbell back squats",
-         link_to_wo="https://youtu.be/1oed-UmAxFs"),
-    Legs(workouts="Dumbbell Bulgarian split squat",
-         link_to_wo="https://youtu.be/2C-uNgKwPLE"),
-    Legs(workouts="Standing calf raises",
-         link_to_wo="https://www.youtube.com/watch?v=wxwY7GXxL4k"),
-    Legs(workouts="Leg press", link_to_wo="https://youtu.be/IZxyjW7MPJQ"),
-    Legs(workouts="Leg extension",
-         link_to_wo="https://www.youtube.com/watch?t=21s&v=YyvSfVjQeL0")
-]
-db.session.add_all(multiple_legs)
-db.session.commit()
+# multiple_legs = [
+#     Legs(workouts="Barbell back squats",
+#          link_to_wo="https://youtu.be/1oed-UmAxFs"),
+#     Legs(workouts="Dumbbell Bulgarian split squat",
+#          link_to_wo="https://youtu.be/2C-uNgKwPLE"),
+#     Legs(workouts="Standing calf raises",
+#          link_to_wo="https://www.youtube.com/watch?v=wxwY7GXxL4k"),
+#     Legs(workouts="Leg press", link_to_wo="https://youtu.be/IZxyjW7MPJQ"),
+#     Legs(workouts="Leg extension",
+#          link_to_wo="https://www.youtube.com/watch?t=21s&v=YyvSfVjQeL0")
+# ]
+# db.session.add_all(multiple_legs)
+# db.session.commit()
 
 
 @app.get('/workoutform/')
+@login_required
 def get_blank_form():
     wf = WorkoutForm()
     return render_template("newplan.j2", wf=wf)
 
 
 @app.post('/workoutform/')
+@login_required
 def post_blank_form():
     wf = WorkoutForm()
     if wf.validate():
@@ -264,6 +266,7 @@ def post_blank_form():
 
 
 @app.get('/completedform/')
+@login_required
 def get_completed_form():
     wf = WorkoutForm()
     selectedAOF = db.session.query(UserForm.areaOfFocus).all()
@@ -303,19 +306,9 @@ def get_completed_form():
 
 
 @app.post('/completedform/')
+@login_required
 def post_completed_form():
     pass
-
-
-# # refresh db and add test data
-# db.drop_all()
-# db.create_all()
-
-# user1 = User(password="meat", email="strawhat@grandline.com")
-# user2 = User(password="light", email="misa@gmail.com")
-
-# db.session.add_all((user1, user2))
-# db.session.commit()
 
 
 @app.route("/")
@@ -337,7 +330,7 @@ def post_register():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None:
             flash("This email is already in use")
-            return redirect(url_for('get_reigster'))
+            return redirect(url_for('get_register'))
         # username and email are both not already being used, create new user
         db.session.add(
             User(password=form.password.data, email=form.email.data))
@@ -367,7 +360,7 @@ def post_login():
             # redirect to page they wanted or to home page
             next = request.args.get("next")
             if next is None or not next.startswith('/'):
-                next = url_for('loggedInHome')
+                next = url_for('home')
 
             return redirect(next)
         # if user doesn't exist or password is wrong
@@ -385,18 +378,14 @@ def post_login():
 @login_required
 def get_logout():
     logout_user()
-    flash('You have been logged out')
+    # flash('You have been logged out')
     return redirect(url_for('index'))
 
 
 @app.route("/home/")
 def home():
-    return render_template("home.j2", current_user=current_user)
-
-
-@app.route("/Home/")
-def loggedInHome():
-    return render_template("loggedInHome.j2", current_user=current_user)
+    return render_template("home.j2", current_user=current_user, 
+        logoutLink=url_for('get_logout'), loginLink=url_for('get_login'), registerLink=url_for('get_register'))
 
 
 @app.route("/workouts/")
@@ -406,6 +395,7 @@ def workoutlist():
 
 
 @app.route("/profile/")
+@login_required
 def profile():
     return render_template("profile.j2")
 
