@@ -1,4 +1,6 @@
+from flask.scaffold import F
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql.schema import ForeignKey
 from hashing_examples import UpdatedHasher
 from loginForm import UpdateInfo
 from loginForm import RegisterForm
@@ -51,6 +53,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.LargeBinary)
     email = db.Column(db.Unicode, nullable=False)
+    formid = relationship("UserForm", backref="users")
 
     @property
     def password(self):
@@ -71,7 +74,9 @@ class User(UserMixin, db.Model):
 
 
 class UserForm(db.Model):
+    __tablename__ = 'userform'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    us_id = db.relationship(db.Integer, ForeignKey='user.id')
     gender = db.Column(db.Unicode, nullable=False)
     age = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Float, nullable=False)
@@ -79,6 +84,7 @@ class UserForm(db.Model):
     areaOfFocus = db.Column(db.Unicode, nullable=False)
     goals = db.Column(db.Unicode, nullable=False)
     frequency = db.Column(db.Integer, nullable=False)
+
     #workouts = relationship('Workouts', backref='userform')
 
 
