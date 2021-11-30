@@ -53,7 +53,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.LargeBinary)
     email = db.Column(db.Unicode, nullable=False)
-    formid = relationship("UserForm", backref="users")
+    formid = relationship("UserForm", backref="Users")
 
     @property
     def password(self):
@@ -75,8 +75,7 @@ class User(UserMixin, db.Model):
 
 class UserForm(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, ForeignKey='user.id')
-    user = relationship("User", back_populates="formid")
+    user_id = db.Column(db.Integer, db.ForeignKey('Users.id'))
     gender = db.Column(db.Unicode, nullable=False)
     age = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Float, nullable=False)
