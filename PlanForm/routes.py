@@ -74,8 +74,8 @@ class UserForm(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     gender = db.Column(db.Unicode, nullable=False)
     age = db.Column(db.Integer, nullable=False)
-    weight = db.Column(db.Integer, nullable=False)
-    height = db.Column(db.Integer, nullable=False)
+    weight = db.Column(db.Float, nullable=False)
+    height = db.Column(db.Float, nullable=False)
     areaOfFocus = db.Column(db.Unicode, nullable=False)
     goals = db.Column(db.Unicode, nullable=False)
     frequency = db.Column(db.Integer, nullable=False)
@@ -300,6 +300,8 @@ def get_completed_form():
                               biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
     db.session.add(completed_form)
     db.session.commit()
+    selectedGoal = db.session.query(UserForm.goals).all()
+    print(selectedGoal)
     listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
                (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
     return render_template("plancreated.j2", wf=wf, listAOF=listAOF)
@@ -384,8 +386,8 @@ def get_logout():
 
 @app.route("/home/")
 def home():
-    return render_template("home.j2", current_user=current_user, 
-        logoutLink=url_for('get_logout'), loginLink=url_for('get_login'), registerLink=url_for('get_register'))
+    return render_template("home.j2", current_user=current_user,
+                           logoutLink=url_for('get_logout'), loginLink=url_for('get_login'), registerLink=url_for('get_register'))
 
 
 @app.route("/workouts/")
