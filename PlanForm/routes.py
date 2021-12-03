@@ -53,7 +53,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.LargeBinary)
     email = db.Column(db.Unicode, nullable=False)
-    formid = relationship("UserForm", backref="Users")
+    formid = relationship("UserForm", backref="user")
 
     @property
     def password(self):
@@ -258,7 +258,8 @@ def post_blank_form():
         areaOfFocusConvert = str1.join(wf.areaOfFocus.data)
         print(areaOfFocusConvert)
         userid = db.session.query(User.id)
-        completed_form = UserForm(user_id=userid, gender=wf.gender.data, age=wf.age.data,
+        print(userid)
+        completed_form = UserForm(user=current_user, gender=wf.gender.data, age=wf.age.data,
                                   weight=wf.weight.data, height=wf.height.data,
                                   areaOfFocus=areaOfFocusConvert, goals=wf.goals.data,
                                   frequency=wf.frequency.data)
