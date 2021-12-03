@@ -14,8 +14,8 @@ class WorkoutForm(FlaskForm):
                         InputRequired(), NumberRange(min=36, max=108,  message="Please enter a reasonable height (36in to 108in)")])
     areaOfFocus = SelectMultipleField("Area of Focus: ", choices=[('', 'Select an Area of Focus'), ('Abs', 'Core Improvement'), ('Chest', 'Chest'), (
         'Shoulders', 'Shoulders'), ('Back', 'Back'), ('Biceps', 'Biceps'), ('Triceps', 'Triceps'), ('Legs', 'Legs')], validators=[InputRequired()])
-    goals = SelectField("Goals: ", choices=[('', 'Select a Goal'), ('Endurance', 'Increase Endurance'), (
-        'Strength', 'Increase Strength'), ('Bodybuilding', 'Bodybuilding')], validators=[InputRequired()])
+    goals = SelectField("Goals: ", choices=[('', 'Select a Goal'), (16, 'Increase Endurance'), (12, 'Bodybuilding'),  (
+        8, 'Increase Strength')], validators=[InputRequired()])
     frequency = SelectField("Times per week: ", choices=[
                             ('', 'Select a Frequency'), (1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5'), (6, '6'), (7, '7')], validators=[InputRequired()])
     submit = SubmitField("Submit")

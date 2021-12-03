@@ -257,7 +257,8 @@ def post_blank_form():
         str1 = " "
         areaOfFocusConvert = str1.join(wf.areaOfFocus.data)
         print(areaOfFocusConvert)
-        completed_form = UserForm(gender=wf.gender.data, age=wf.age.data,
+        userid = db.session.query(User.id)
+        completed_form = UserForm(user_id=userid, gender=wf.gender.data, age=wf.age.data,
                                   weight=wf.weight.data, height=wf.height.data,
                                   areaOfFocus=areaOfFocusConvert, goals=wf.goals.data,
                                   frequency=wf.frequency.data)
