@@ -276,7 +276,8 @@ def post_blank_form():
 @login_required
 def get_completed_form():
     wf = WorkoutForm()
-    selectedAOF = db.session.query(UserForm.areaOfFocus).all()
+    selectedAOF = db.session.query(
+        UserForm.areaOfFocus).filter_by(user=current_user)
     stringAOF = selectedAOF[0]
     stringAOF = stringAOF[0]
     resultAOF = stringAOF.split()
@@ -308,7 +309,6 @@ def get_completed_form():
     db.session.add(completed_form)
     db.session.commit()
     selectedGoal = db.session.query(UserForm.goals).all()
-    print(selectedGoal)
     listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
                (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
     return render_template("plancreated.j2", wf=wf, listAOF=listAOF)
