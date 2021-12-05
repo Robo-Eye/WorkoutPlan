@@ -83,8 +83,20 @@ class UserForm(db.Model):
     areaOfFocus = db.Column(db.Unicode, nullable=False)
     goals = db.Column(db.Unicode, nullable=False)
     frequency = db.Column(db.Integer, nullable=False)
+    #wo_id = relationship("Workouts", backref="UserForm")
 
-    #workouts = relationship('Workouts', backref='userform')
+
+class Workouts(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    #userform_id = db.Column(db.Integer, db.ForeignKey('UserForm.id'))
+    abs = db.Column(db.Boolean)
+    chest = db.Column(db.Boolean)
+    back = db.Column(db.Boolean)
+    biceps = db.Column(db.Boolean)
+    triceps = db.Column(db.Boolean)
+    shoulders = db.Column(db.Boolean)
+    legs = db.Column(db.Boolean)
+    #userform_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
 
 
 class Abs(db.Model):
@@ -127,18 +139,6 @@ class Legs(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     workouts = db.Column(db.Unicode)
     link_to_wo = db.Column(db.Unicode)
-
-
-class Workouts(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    abs = db.Column(db.Boolean)
-    chest = db.Column(db.Boolean)
-    back = db.Column(db.Boolean)
-    biceps = db.Column(db.Boolean)
-    triceps = db.Column(db.Boolean)
-    shoulders = db.Column(db.Boolean)
-    legs = db.Column(db.Boolean)
-    #userform_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
 
 
 # db.drop_all()  # for testing
