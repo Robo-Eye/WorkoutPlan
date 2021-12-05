@@ -74,6 +74,7 @@ class User(UserMixin, db.Model):
 
 
 class UserForm(db.Model):
+    __tablename__ = 'UserForm'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.id'))
     gender = db.Column(db.Unicode, nullable=False)
@@ -83,12 +84,12 @@ class UserForm(db.Model):
     areaOfFocus = db.Column(db.Unicode, nullable=False)
     goals = db.Column(db.Unicode, nullable=False)
     frequency = db.Column(db.Integer, nullable=False)
-    #wo_id = relationship("Workouts", backref="UserForm")
+    # wo_id = relationship("Workouts", backref="user_form") #this one
 
 
 class Workouts(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    #userform_id = db.Column(db.Integer, db.ForeignKey('UserForm.id'))
+    # userform_id = db.Column(db.Integer, db.ForeignKey('userform.id')) #supposed to link with this
     abs = db.Column(db.Boolean)
     chest = db.Column(db.Boolean)
     back = db.Column(db.Boolean)
