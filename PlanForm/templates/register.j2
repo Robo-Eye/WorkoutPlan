@@ -53,7 +53,8 @@
                 <form action="#", method="POST">
                     <div class="mb-3">
                         {{ form.hidden_tag() }}
-                        <div class="form-label">  &nbsp;&emsp;&emsp; &emsp; &ensp; &emsp;{{ form.email.label }}&nbsp;{{ form.email() }} </div>
+                        <div class="form-label"> {{ form.username.label }} {{ form.username() }} </div>
+                        <div class="form-label"> &nbsp;&emsp;&emsp; &emsp; &ensp; &emsp;{{ form.email.label }}&nbsp;{{ form.email() }} </div>
                         <div class="form-label"> &nbsp;&ensp;&emsp;&emsp;&emsp;{{ form.password.label }} {{ form.password(id="pass") }} </div>
                         <div class="form-label"> {{ form.confirm_password.label }} {{ form.confirm_password(id="confPass") }} </div>
                         <button class="btn btn-block"> {{ form.submit() }} </button>

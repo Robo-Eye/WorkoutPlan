@@ -55,6 +55,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.LargeBinary)
     email = db.Column(db.Unicode, nullable=False)
+    username = db.Column(db.Unicode, nullable=False)
     formid = db.relationship("Userform", backref="user")
     workoutsid = db.relationship("Workouts", backref="user")
 
@@ -355,9 +356,14 @@ def post_register():
         if user is not None:
             flash("This email is already in use")
             return redirect(url_for('get_register'))
+        # check if existing account has this username
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None:
+            flash("This username is already in use")
+            return redirect(url_for('get_register'))
         # username and email are both not already being used, create new user
         db.session.add(
-            User(password=form.password.data, email=form.email.data))
+            User(password=form.password.data, email=form.email.data, username=form.username.data))
         db.session.commit()
         return redirect(url_for('get_login'))
     else:
@@ -376,8 +382,8 @@ def get_login():
 def post_login():
     form = LoginForm()
     if form.validate():
-        user = User.query.filter_by(email=form.email.data).first()
-        # if user with this email exists and password matches
+        user = User.query.filter_by(username=form.username.data).first()
+        # if user with this username exists and password matches
         if user is not None and user.verify_password(form.password.data):
             # log in user using login_manager
             login_user(user)
