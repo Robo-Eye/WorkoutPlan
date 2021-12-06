@@ -12,8 +12,8 @@ from flask_sqlalchemy import SQLAlchemy
 from WOPlanForm import WorkoutForm
 from flask_login import current_user
 from sqlalchemy.orm.attributes import flag_modified
-#from geopy.geocoders import Nominatim
-#import geocoder
+from geopy.geocoders import Nominatim
+import geocoder
 
 import os
 import sys
