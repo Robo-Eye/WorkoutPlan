@@ -3,96 +3,175 @@
     <head>
         <meta charset="utf-8">
         <title> Workout List </title>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="container">
-            {% for message in get_flashed_messages() %}
-                <div class="alert alert-warning">
-                    <button type="button" class="close" data-bs-dismiss="alert"> 
-                        &times;
-                    </button>
-                    {{ message }}
-                </div>
-            {% endfor %}
+        <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home/">Workout Creator</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/workouts/">List of All Workouts</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile/">Profile Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout/">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register/">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-        <h1>Workout List</h1>
-        <table>
-            <tr>
-                <th>Abs</th>
-            </tr>
-            {%for x in abslist%}
-            <tr>
-                <td><a href = "{{x.1}}">{{x.0}}</a></td>
-            </tr>        
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>Chest</th>
-            </tr>
-            {%for x in chestlist%}
-            <tr>
-                <td><a href = "{{x.1}}">{{x.0}}</a></td>
-            </tr>        
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>Back</th>
-            </tr>
-            {%for x in backlist%}
-            <tr>
-                <td><a href = "{{x.1}}">{{x.0}}</a></td>
-            </tr>        
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>Biceps</th>
-            </tr>
-            {%for x in bicepslist%}
-            <tr>
-                <td><a href = "{{x.1}}">{{x.0}}</a></td>
-            </tr>        
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>Triceps</th>
-            </tr>
-            {%for x in tricepslist%}
-            <tr>
-                <td><a href = "{{x.1}}">{{x.0}}</a></td>
-            </tr>        
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>Shoulders</th>
-            </tr>
-            {%for x in shoulderslist%}
-            <tr>
-                <td><a href = "{{x.1}}">{{x.0}}</a></td>
-            </tr>        
-            {% endfor %}
-        </table>
-        <table>
-            <tr>
-                <th>Legs</th>
-            </tr>
-            {%for x in legslist%}
-            <tr>
-                <td><a href = "{{x.1}}">{{x.0}}</a></td>
-            </tr>        
-            {% endfor %}
-        </table>
-        <a href = "/register/">Create Personalized Workout</a>
-        <br>
-        <a href = "/login/">Login</a>
-        <br>
-        <a href = "/home/"> Return to Home Page </a>
+    </nav>
+        <div class="container pt-3 pb-5">
+            <div class="container">
+                {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning">
+                        <button type="button" class="close" data-bs-dismiss="alert"> 
+                            &times;
+                        </button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="container mb-2">
+                <h1>Workout List</h1>
+                <p>By clicking on the titles of the workouts you will be redirected to a video showing you exactly how each workout should properly be done!</p>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h3 class="my-0 fw-normal">Abs</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled pricing-card-title mt-2 mb-2">
+                                {%for x in abslist%}
+                                   <li><h5><a href = "{{x.1}}" class="text-decoration-none text-primary">{{x.0}}</a></h5></li>       
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h3 class="my-0 fw-normal">Chest</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled pricing-card-title mt-2 mb-2">
+                                {%for x in chestlist%}
+                                   <li><h5><a href = "{{x.1}}" class="text-decoration-none text-primary">{{x.0}}</a></h5></li>       
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h3 class="my-0 fw-normal">Back</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled pricing-card-title mt-2 mb-2">
+                                {%for x in backlist%}
+                                   <li><h5><a href = "{{x.1}}" class="text-decoration-none text-primary">{{x.0}}</a></h5></li>       
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h3 class="my-0 fw-normal">Biceps</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled pricing-card-title mt-2 mb-2">
+                                {%for x in bicepslist%}
+                                   <li><h5><a href = "{{x.1}}" class="text-decoration-none text-primary">{{x.0}}</a></h5></li>       
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h3 class="my-0 fw-normal">Triceps</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled pricing-card-title mt-2 mb-2">
+                                {%for x in tricepslist%}
+                                   <li><h5><a href = "{{x.1}}" class="text-decoration-none text-primary">{{x.0}}</a></h5></li>       
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h3 class="my-0 fw-normal">Shoulders</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled pricing-card-title mt-2 mb-2">
+                                {%for x in shoulderslist%}
+                                   <li><h5><a href = "{{x.1}}" class="text-decoration-none text-primary">{{x.0}}</a></h5></li>       
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+                <div class="col">
+                    <div class="card mb-4 rounded-3 shadow-sm">
+                        <div class="card-header py-3">
+                            <h3 class="my-0 fw-normal">Legs</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled pricing-card-title mt-2 mb-2">
+                                {%for x in legslist%}
+                                   <li><h5><a href = "{{x.1}}" class="text-decoration-none text-primary">{{x.0}}</a></h5></li>       
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
     </body>
+    <footer class="bg-light text-center fixed-bottom text-lg-start">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright:
+            <a class="text-dark">TJA Inc.</a>
+        </div>
+    </footer>
 </html>

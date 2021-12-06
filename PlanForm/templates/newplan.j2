@@ -2,32 +2,73 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title> New Plan </title>
-
+        <title> Create A New Workout Plan </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="container">
-            {% for message in get_flashed_messages() %}
-                <div class="alert alert-warning">
-                    <button type="button" class="close" data-bs-dismiss="alert"> 
-                        &times;
-                    </button>
-                    {{ message }}
+        <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/home/">Workout Creator</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/workouts/">List of All Workouts</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register/">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/login/">Login</a>
+                        </li>
+                    </ul>
                 </div>
-            {% endfor %}
-        </div>
-        <h1>Create a Plan</h1>
-        <div class="container-fluid">
-            <form action="#" method = "POST">
-               {{wf.hidden_tag()}}{{wf.gender.label}}{{wf.gender}}
-               {{wf.age.label}}{{wf.age}}{{wf.weight.label}}
-               {{wf.weight}}{{wf.height.label}}{{wf.height}}
-               {{wf.areaOfFocus.label}}{{wf.areaOfFocus}}{{wf.goals.label}}
-               {{wf.goals}}{{wf.frequency.label}}{{wf.frequency}}
-               {{wf.submit()}}
-            </form>
-        </div>
+            </div>
+        </nav>
+        <header>
+            <div class="container">
+                {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning">
+                        <button type="button" class="close" data-bs-dismiss="alert"> 
+                            &times;
+                        </button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </header>
+        <main>
+            <div class="container text-center mt-3">
+                <h1>Create a Plan</h1>
+                <form action="#" method = "POST">
+                    <div class="mb-3">
+                        {{wf.hidden_tag()}}
+                        <div class="form-label">&emsp;&emsp;&ensp;&nbsp;{{wf.gender.label}} {{wf.gender}}</div>
+                        <div class="form-label">&ensp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;&emsp;{{wf.age.label}} {{wf.age}}</div>
+                        <div class="form-label">&ensp;&nbsp;&emsp;&emsp;{{wf.weight.label}} {{wf.weight}}</div>
+                        <div class="form-label">&emsp;&ensp;{{wf.height.label}} {{wf.height}}</div> 
+                        <div class="form-label">&emsp;&emsp;&emsp;{{wf.areaOfFocus.label}} {{wf.areaOfFocus}}</div>
+                        <div class="form-label">&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;{{wf.goals.label}} {{wf.goals}}</div>
+                        <div class="form-label">{{wf.numberofsets.label}} {{wf.numberofsets}}</div>
+                        <button class="btn btn-block"> {{wf.submit()}} </button>
+                    </div>
+                </form>
+            </div>
+        </main>
     </body>
+    <footer class="bg-light text-center fixed-bottom text-lg-start">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright:
+            <a class="text-dark">TJA Inc.</a>
+        </div>
+    </footer>
 </html>

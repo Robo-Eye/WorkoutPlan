@@ -3,12 +3,38 @@
     <head>
         <meta charset="utf-8">
         <title> Login </title>
-
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     </head>
 
     <body>
+        <nav class="navbar navbar-expand-md sticky-top navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/home/">Workout Creator</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/workouts/">List of All Workouts</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/register/">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/login/">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <header>
             <div class="container">
                 {% for message in get_flashed_messages() %}
@@ -22,12 +48,16 @@
             </div>
         </header>
         <main>
-            <div class="container-fluid">
+            <div class="container text-center mt-3">
+                <h1>Login</h1>
                 <form action="#", method="POST">
-                    {{ form.hidden_tag() }}
-                    <div class="row"> {{ form.email.label }} {{ form.email() }} </div>
-                    <div class="row"> {{ form.password.label }} {{ form.password() }} </div>
-                    <div class="row"> {{ form.submit() }} </div>
+                    <div class="mb-3">
+                        {{ form.hidden_tag() }}
+                        <div class="form-label"> {{ form.email.label }}&emsp; &ensp; {{ form.email() }} </div>
+                        <div class="form-label"> {{ form.password.label }} {{ form.password() }} </div>
+                        
+                        <button class="btn btn-block"> {{ form.submit() }} </button>
+                    </div>
                 </form>
                 <div class="row">  
                     <p> Don't have an account? 
@@ -37,5 +67,10 @@
             </div>
         </main>
     </body>
-
+    <footer class="bg-light text-center fixed-bottom text-lg-start">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2021 Copyright:
+            <a class="text-dark">TJA Inc.</a>
+        </div>
+    </footer>
 </html>
