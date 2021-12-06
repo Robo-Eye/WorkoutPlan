@@ -286,7 +286,6 @@ def get_completed_form():
         Userform.goals).filter_by(user=current_user).first()
     selectedREPS = db.session.query(
         Userform.numberofsets).filter_by(user=current_user).first()
-    print("TEST TEST TEST TEST TEST")
     resultGoal = selectedGoal[0]
     resultREPS = selectedREPS[0]
     stringAOF = selectedAOF[0]
@@ -322,6 +321,9 @@ def get_completed_form():
     db.session.commit()
     listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
                (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
+
+    # abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
+    #                      ), bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
     return render_template("plancreated.j2", wf=wf, listAOF=listAOF, selectedGoal=resultGoal, selectedREPS=resultREPS)
 
 
