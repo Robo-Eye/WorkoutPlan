@@ -53,7 +53,8 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.LargeBinary)
     email = db.Column(db.Unicode, nullable=False)
-    formid = db.relationship("UserForm", backref="user")
+    formid = db.relationship("Userform", backref="user")
+    workoutsid = db.relationship("Workouts", backref="user")
 
     @property
     def password(self):
@@ -284,8 +285,10 @@ def get_completed_form():
     selectedGoal = db.session.query(
         Userform.goals).filter_by(user=current_user).first()
     selectedREPS = db.session.query(
-        Userform.numberofsets).filter_by(user=current_user)
+        Userform.numberofsets).filter_by(user=current_user).first()
     print("TEST TEST TEST TEST TEST")
+    resultGoal = selectedGoal[0]
+    resultREPS = selectedREPS[0]
     stringAOF = selectedAOF[0]
     stringAOF = stringAOF[0]
     resultAOF = stringAOF.split()
@@ -317,10 +320,9 @@ def get_completed_form():
                               biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
     db.session.add(completed_form)
     db.session.commit()
-    #selectedGoal = db.session.query(UserForm.goals).all()
     listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
                (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
-    return render_template("plancreated.j2", wf=wf, listAOF=listAOF, selectedGoal=selectedGoal, selectedREPS=selectedREPS)
+    return render_template("plancreated.j2", wf=wf, listAOF=listAOF, selectedGoal=resultGoal, selectedREPS=resultREPS)
 
 
 @app.post('/completedform/')
@@ -409,8 +411,8 @@ def home():
 @app.route("/workouts/")
 def workoutlist():
     return render_template("workouts.j2", current_user=current_user,
-    abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
-    ), bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
+                           abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
+                           ), bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
 
 
 @app.route("/profile/")
