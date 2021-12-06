@@ -1,5 +1,5 @@
 from flask.scaffold import F
-from sqlalchemy.orm import backref, relationship
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from hashing_examples import UpdatedHasher
 from loginForm import UpdateInfo
@@ -53,8 +53,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.LargeBinary)
     email = db.Column(db.Unicode, nullable=False)
-    formid = db.relationship("Userform", backref="user")
-    workoutsid = db.relationship("Workouts", backref="user")
+    formid = db.relationship("UserForm", backref="user")
 
     @property
     def password(self):
@@ -409,7 +408,8 @@ def home():
 
 @app.route("/workouts/")
 def workoutlist():
-    return render_template("workouts.j2", abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
+    return render_template("workouts.j2", current_user=current_user,
+    abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
     ), bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
 
 
