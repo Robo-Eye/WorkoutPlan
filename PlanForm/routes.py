@@ -84,7 +84,7 @@ class Userform(db.Model):
     height = db.Column(db.Float, nullable=False)
     areaOfFocus = db.Column(db.Unicode, nullable=False)
     goals = db.Column(db.Unicode, nullable=False)
-    frequency = db.Column(db.Integer, nullable=False)
+    numberofsets = db.Column(db.Integer, nullable=False)
     # workouts = db.relationship("Workouts", backref="Userform")  # this one
 
 
@@ -266,7 +266,7 @@ def post_blank_form():
         completed_form = Userform(user=current_user, gender=wf.gender.data, age=wf.age.data,
                                   weight=wf.weight.data, height=wf.height.data,
                                   areaOfFocus=areaOfFocusConvert, goals=wf.goals.data,
-                                  frequency=wf.frequency.data)
+                                  numberofsets=wf.numberofsets.data)
         db.session.add(completed_form)
         db.session.commit()
         return redirect(url_for("get_completed_form"))
@@ -282,13 +282,15 @@ def get_completed_form():
     wf = WorkoutForm()
     selectedAOF = db.session.query(
         Userform.areaOfFocus).filter_by(user=current_user)
-    selectedID = db.session.query(
-        Userform.id).filter_by(user=current_user)
+    selectedGoal = db.session.query(
+        Userform.goals).filter_by(user=current_user).first()
+    selectedREPS = db.session.query(
+        Userform.numberofsets).filter_by(user=current_user)
     print("TEST TEST TEST TEST TEST")
-    # print(selectedID)
     stringAOF = selectedAOF[0]
     stringAOF = stringAOF[0]
     resultAOF = stringAOF.split()
+
     abs = False
     chest = False
     back = False
@@ -319,7 +321,7 @@ def get_completed_form():
     #selectedGoal = db.session.query(UserForm.goals).all()
     listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
                (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
-    return render_template("plancreated.j2", wf=wf, listAOF=listAOF)
+    return render_template("plancreated.j2", wf=wf, listAOF=listAOF, selectedGoal=selectedGoal, selectedREPS=selectedREPS)
 
 
 @app.post('/completedform/')
