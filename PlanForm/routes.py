@@ -53,7 +53,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.LargeBinary)
     email = db.Column(db.Unicode, nullable=False)
-    formid = relationship("UserForm", backref="user")
+    formid = db.relationship("UserForm", backref="user")
 
     @property
     def password(self):
@@ -74,7 +74,6 @@ class User(UserMixin, db.Model):
 
 
 class UserForm(db.Model):
-    __tablename__ = 'UserForm'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.id'))
     gender = db.Column(db.Unicode, nullable=False)
@@ -84,12 +83,12 @@ class UserForm(db.Model):
     areaOfFocus = db.Column(db.Unicode, nullable=False)
     goals = db.Column(db.Unicode, nullable=False)
     frequency = db.Column(db.Integer, nullable=False)
-    # wo_id = relationship("Workouts", backref="user_form") #this one
+    # workouts = db.relationship("Workouts", backref="UserForm")  # this one
 
 
 class Workouts(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # userform_id = db.Column(db.Integer, db.ForeignKey('userform.id')) #supposed to link with this
+    #form_id = db.Column(db.Integer, db.ForeignKey('UserForm.id'))
     abs = db.Column(db.Boolean)
     chest = db.Column(db.Boolean)
     back = db.Column(db.Boolean)
@@ -97,6 +96,7 @@ class Workouts(db.Model):
     triceps = db.Column(db.Boolean)
     shoulders = db.Column(db.Boolean)
     legs = db.Column(db.Boolean)
+
     #userform_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
 
 
@@ -279,6 +279,10 @@ def get_completed_form():
     wf = WorkoutForm()
     selectedAOF = db.session.query(
         UserForm.areaOfFocus).filter_by(user=current_user)
+    selectedID = db.session.query(
+        UserForm.id).filter_by(user=current_user)
+    print("TEST TEST TEST TEST TEST")
+    print(selectedID)
     stringAOF = selectedAOF[0]
     stringAOF = stringAOF[0]
     resultAOF = stringAOF.split()
@@ -309,7 +313,7 @@ def get_completed_form():
                               biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
     db.session.add(completed_form)
     db.session.commit()
-    selectedGoal = db.session.query(UserForm.goals).all()
+    #selectedGoal = db.session.query(UserForm.goals).all()
     listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
                (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
     return render_template("plancreated.j2", wf=wf, listAOF=listAOF)
