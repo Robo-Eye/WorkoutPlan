@@ -16,6 +16,6 @@ class WorkoutForm(FlaskForm):
         'Shoulders', 'Shoulders'), ('Back', 'Back'), ('Biceps', 'Biceps'), ('Triceps', 'Triceps'), ('Legs', 'Legs')], validators=[InputRequired()])
     goals = SelectField("Goals: ", choices=[('', 'Select a Goal'), ('16', 'Increase Endurance'), ('12', 'Bodybuilding'),  (
         '8', 'Increase Strength')], validators=[InputRequired()])
-    numberofsets = SelectField("Number of Sets ", choices=[
+    numberofsets = SelectField("Number of Sets: ", choices=[
         ('', 'Select Number of Sets'), ('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')], validators=[InputRequired()])
     submit = SubmitField("Submit")
