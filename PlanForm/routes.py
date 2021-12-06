@@ -1,5 +1,5 @@
 from flask.scaffold import F
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
 from hashing_examples import UpdatedHasher
 from loginForm import UpdateInfo
@@ -53,7 +53,8 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     password_hash = db.Column(db.LargeBinary)
     email = db.Column(db.Unicode, nullable=False)
-    formid = db.relationship("UserForm", backref="user")
+    formid = db.relationship("Userform", backref="user")
+    workoutsid = db.relationship("Workouts", backref="user")
 
     @property
     def password(self):
@@ -73,9 +74,10 @@ class User(UserMixin, db.Model):
         return f"User({self.id})"
 
 
-class UserForm(db.Model):
+class Userform(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.id'))
+    userform = db.relationship('User', foreign_keys='Userform.user_id')
     gender = db.Column(db.Unicode, nullable=False)
     age = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Float, nullable=False)
@@ -83,12 +85,13 @@ class UserForm(db.Model):
     areaOfFocus = db.Column(db.Unicode, nullable=False)
     goals = db.Column(db.Unicode, nullable=False)
     frequency = db.Column(db.Integer, nullable=False)
-    # workouts = db.relationship("Workouts", backref="UserForm")  # this one
+    # workouts = db.relationship("Workouts", backref="Userform")  # this one
 
 
 class Workouts(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    #form_id = db.Column(db.Integer, db.ForeignKey('UserForm.id'))
+    woid = db.Column(db.Integer, db.ForeignKey('Users.id'))
+    workouts = db.relationship('User', foreign_keys='Workouts.woid')
     abs = db.Column(db.Boolean)
     chest = db.Column(db.Boolean)
     back = db.Column(db.Boolean)
@@ -260,7 +263,7 @@ def post_blank_form():
         print(areaOfFocusConvert)
         userid = db.session.query(User.id)
         print(userid)
-        completed_form = UserForm(user=current_user, gender=wf.gender.data, age=wf.age.data,
+        completed_form = Userform(user=current_user, gender=wf.gender.data, age=wf.age.data,
                                   weight=wf.weight.data, height=wf.height.data,
                                   areaOfFocus=areaOfFocusConvert, goals=wf.goals.data,
                                   frequency=wf.frequency.data)
@@ -278,11 +281,11 @@ def post_blank_form():
 def get_completed_form():
     wf = WorkoutForm()
     selectedAOF = db.session.query(
-        UserForm.areaOfFocus).filter_by(user=current_user)
+        Userform.areaOfFocus).filter_by(user=current_user)
     selectedID = db.session.query(
-        UserForm.id).filter_by(user=current_user)
+        Userform.id).filter_by(user=current_user)
     print("TEST TEST TEST TEST TEST")
-    print(selectedID)
+    # print(selectedID)
     stringAOF = selectedAOF[0]
     stringAOF = stringAOF[0]
     resultAOF = stringAOF.split()
@@ -309,7 +312,7 @@ def get_completed_form():
             shoulders = True
         if (x.lower() == "legs"):
             legs = True
-    completed_form = Workouts(abs=abs, chest=chest, back=back,
+    completed_form = Workouts(user=current_user, abs=abs, chest=chest, back=back,
                               biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
     db.session.add(completed_form)
     db.session.commit()
