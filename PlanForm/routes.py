@@ -13,7 +13,7 @@ from WOPlanForm import WorkoutForm
 from flask_login import current_user
 from sqlalchemy.orm.attributes import flag_modified
 from geopy.geocoders import Nominatim
-#import geocoder
+import geocoder
 
 import os
 import sys
@@ -331,7 +331,8 @@ def get_completed_form():
     
     # abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
     #                      ), bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
-    return render_template("plancreated.j2", wf=wf, listAOF=listAOF, selectedGoal=resultGoal, selectedREPS=resultREPS)
+    return render_template("plancreated.j2", wf=wf, listAOF=listAOF, selectedGoal=resultGoal, 
+        selectedREPS=resultREPS)
 
 
 @app.post('/completedform/')
@@ -418,15 +419,35 @@ def get_logout():
 
 @app.route("/home/")
 def home():
+
+    # initialize the Nominatim object
+    Nomi_locator = Nominatim(user_agent="My App")
+
+    my_location = geocoder.ip('me')
+
+    # my latitude and longitude coordinates
+    lat = my_location.geojson['features'][0]['properties']['lat']
+    long = my_location.geojson['features'][0]['properties']['lng']
+
+    # get the location
+    location = Nomi_locator.reverse(f"{lat}, {long}")
+
     return render_template("home.j2", current_user=current_user,
-                           logoutLink=url_for('get_logout'), loginLink=url_for('get_login'), registerLink=url_for('get_register'))
+        logoutLink=url_for('get_logout'), loginLink=url_for('get_login'), 
+        registerLink=url_for('get_register'), 
+        lat=lat, long=long, location=location)
 
 
 @app.route("/workouts/")
 def workoutlist():
     return render_template("workouts.j2", current_user=current_user,
-                           abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
-                           ), bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
+        abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), 
+        chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), 
+        backlist=db.session.query(Back.workouts, Back.link_to_wo).all(), 
+        bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), 
+        tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), 
+        shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), 
+        legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
 
 
 @app.route("/profile/")
