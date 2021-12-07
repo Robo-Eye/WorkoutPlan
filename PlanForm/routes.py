@@ -302,28 +302,35 @@ def get_completed_form():
     triceps = False
     shoulders = False
     legs = False
-
+    listAOF = []
     for x in resultAOF:
         if (x.lower() == "abs"):
             abs = True
+            listAOF.append("abs")
         if (x.lower() == "chest"):
             chest = True
+            listAOF.append("chest")
         if (x.lower() == "back"):
             back = True
+            listAOF.append("back")
         if (x.lower() == "biceps"):
             biceps = True
+            listAOF.append("biceps")
         if (x.lower() == "triceps"):
             triceps = True
+            listAOF.append("triceps")
         if (x.lower() == "shoulders"):
             shoulders = True
+            listAOF.append("shoulders")
         if (x.lower() == "legs"):
             legs = True
+            listAOF.append("legs")
     completed_form = Workouts(user=current_user, abs=abs, chest=chest, back=back,
                               biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
     db.session.add(completed_form)
     db.session.commit()
-    listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
-               (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
+    # listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
+    #          (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
 
     # workouts = db.session.query(Workouts).
 
@@ -360,7 +367,7 @@ def get_completed_form():
         legslist = db.session.query(Legs.workouts, Legs.link_to_wo).all()
         resultWO.append(legslist)
 
-    return render_template("plancreated.j2", wf=wf, listAOF=listAOF, selectedGoal=resultGoal, selectedREPS=resultREPS, resultWO=resultWO)
+    return render_template("plancreated.j2", wf=wf, listAOF_resultWO=zip(listAOF, resultWO), selectedGoal=resultGoal, selectedREPS=resultREPS)
 
 
 @ app.post('/completedform/')

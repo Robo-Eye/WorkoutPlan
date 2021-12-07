@@ -51,16 +51,9 @@
                 <h1>Your New Personalized Workout Plan</h1>
                 <p>Based on your goal, in each of your workouts you should strive for {{selectedREPS}} sets with a rep range of {{selectedGoal}}</p>
             <table>
-                
+                {%for z,x in listAOF_resultWO%}
                 <tr>
-                {%for x in listAOF%}
-                    {%if x.0%}
-                    <th>|{{x.1|capitalize}}|</th>
-                    {%endif%}
-                {%endfor%}
-                </tr>
-                {%for x in resultWO%}
-                <tr>
+                    <td>{{z|capitalize}}</td>
                     {%for y in x%}
                         <td><a href = "{{y.1}}">{{y.0}}</a></td>
                     {%endfor%}
