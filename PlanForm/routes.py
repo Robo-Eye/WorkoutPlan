@@ -13,7 +13,7 @@ from WOPlanForm import WorkoutForm
 from flask_login import current_user
 from sqlalchemy.orm.attributes import flag_modified
 from geopy.geocoders import Nominatim
-#import geocoder
+# import geocoder
 
 import os
 import sys
@@ -103,7 +103,7 @@ class Workouts(db.Model):
     shoulders = db.Column(db.Boolean)
     legs = db.Column(db.Boolean)
 
-    #userform_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
+    # userform_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
 
 
 class Abs(db.Model):
@@ -328,36 +328,59 @@ def get_completed_form():
     # workouts = db.session.query(Workouts).
 
     listOfSelectedWO = db.session.query(
-        Workouts.woid).filter_by(user=current_user).first()
-    listOfSelectedWO = listOfSelectedWO[0]
+        Workouts.abs, Workouts.chest, Workouts.back,
+        Workouts.biceps, Workouts.triceps, Workouts.shoulders,
+        Workouts.legs).filter_by(user=current_user).first()
 
     print("-------------- Testing --------------------")
     print(listOfSelectedWO)
     print("-------------- End --------------------")
+    resultWO = []
+    if(listOfSelectedWO[0]):
+        abslist = db.session.query(Abs.workouts, Abs.link_to_wo).all()
+        resultWO.append(abslist)
+    if(listOfSelectedWO[1]):
+        chestlist = db.session.query(Chest.workouts, Chest.link_to_wo).all()
+        resultWO.append(chestlist)
+    if(listOfSelectedWO[2]):
+        backlist = db.session.query(Back.workouts, Back.link_to_wo).all()
+        resultWO.append(backlist)
+    if(listOfSelectedWO[3]):
+        bicepslist = db.session.query(Biceps.workouts, Biceps.link_to_wo).all()
+        resultWO.append(bicepslist)
+    if(listOfSelectedWO[4]):
+        tricepslist = db.session.query(
+            Triceps.workouts, Triceps.link_to_wo).all()
+        resultWO.append(tricepslist)
+    if(listOfSelectedWO[5]):
+        shoulderslist = db.session.query(
+            Shoulders.workouts, Shoulders.link_to_wo).all()
+        resultWO.append(shoulderslist)
+    if(listOfSelectedWO[6]):
+        legslist = db.session.query(Legs.workouts, Legs.link_to_wo).all()
+        resultWO.append(legslist)
 
-    # abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
-    #                      ), bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
-    return render_template("plancreated.j2", wf=wf, listAOF=listAOF, selectedGoal=resultGoal, selectedREPS=resultREPS)
+    return render_template("plancreated.j2", wf=wf, listAOF=listAOF, selectedGoal=resultGoal, selectedREPS=resultREPS, resultWO=resultWO)
 
 
-@app.post('/completedform/')
-@login_required
+@ app.post('/completedform/')
+@ login_required
 def post_completed_form():
     pass
 
 
-@app.route("/")
+@ app.route("/")
 def index():
     return redirect(url_for('home'))
 
 
-@app.get("/register/")
+@ app.get("/register/")
 def get_register():
     form = RegisterForm()
     return render_template("register.j2", form=form, loginLink=url_for('get_login'))
 
 
-@app.post("/register/")
+@ app.post("/register/")
 def post_register():
     form = RegisterForm()
     if form.validate():
@@ -382,13 +405,13 @@ def post_register():
         return redirect(url_for('get_register'))
 
 
-@app.get("/login/")
+@ app.get("/login/")
 def get_login():
     form = LoginForm()
     return render_template("login.j2", form=form, registerLink=url_for('get_register'))
 
 
-@app.post("/login/")
+@ app.post("/login/")
 def post_login():
     form = LoginForm()
     if form.validate():
@@ -414,40 +437,40 @@ def post_login():
         return redirect(url_for('get_login'))
 
 
-@app.get('/logout/')
-@login_required
+@ app.get('/logout/')
+@ login_required
 def get_logout():
     logout_user()
     # flash('You have been logged out')
     return redirect(url_for('index'))
 
 
-@app.route("/home/")
+@ app.route("/home/")
 def home():
     return render_template("home.j2", current_user=current_user,
                            logoutLink=url_for('get_logout'), loginLink=url_for('get_login'), registerLink=url_for('get_register'))
 
 
-@app.route("/workouts/")
+@ app.route("/workouts/")
 def workoutlist():
     return render_template("workouts.j2", current_user=current_user,
                            abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
                            ), bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
 
 
-@app.route("/profile/")
-@login_required
+@ app.route("/profile/")
+@ login_required
 def profile():
     return render_template("profile.j2")
 
 
-@app.get("/changeInfo/")
+@ app.get("/changeInfo/")
 def get_changeInfo():
     form = UpdateInfo()
     return render_template("updateInfo.j2", form=form)
 
 
-@app.post("/changeInfo/")
+@ app.post("/changeInfo/")
 def post_changeInfo():
     form = UpdateInfo()
     if form.validate():

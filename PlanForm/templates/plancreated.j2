@@ -59,7 +59,13 @@
                     {%endif%}
                 {%endfor%}
                 </tr>
-
+                {%for x in resultWO%}
+                <tr>
+                    {%for y in x%}
+                        <td><a href = "{{y.1}}">{{y.0}}</a></td>
+                    {%endfor%}
+                </tr>
+                {%endfor%} 
             </table>
         </main>
     </body>
