@@ -324,11 +324,17 @@ def get_completed_form():
     db.session.commit()
     listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
                (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
-    
-    #workouts = db.session.query(Workouts).
 
-    #listOfSelectedWO = 
-    
+    # workouts = db.session.query(Workouts).
+
+    listOfSelectedWO = db.session.query(
+        Workouts.woid).filter_by(user=current_user).first()
+    listOfSelectedWO = listOfSelectedWO[0]
+
+    print("-------------- Testing --------------------")
+    print(listOfSelectedWO)
+    print("-------------- End --------------------")
+
     # abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), backlist=db.session.query(Back.workouts, Back.link_to_wo).all(
     #                      ), bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
     return render_template("plancreated.j2", wf=wf, listAOF=listAOF, selectedGoal=resultGoal, 
