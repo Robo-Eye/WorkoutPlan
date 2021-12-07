@@ -461,21 +461,27 @@ def home():
     location = Nomi_locator.reverse(f"{lat}, {long}")
 
     return render_template("home.j2", current_user=current_user,
-        logoutLink=url_for('get_logout'), loginLink=url_for('get_login'), 
-        registerLink=url_for('get_register'), 
-        lat=lat, long=long, location=location)
+                           logoutLink=url_for('get_logout'), loginLink=url_for('get_login'),
+                           registerLink=url_for('get_register'),
+                           lat=lat, long=long, location=location)
 
 
 @ app.route("/workouts/")
 def workoutlist():
     return render_template("workouts.j2", current_user=current_user,
-        abslist=db.session.query(Abs.workouts, Abs.link_to_wo).all(), 
-        chestlist=db.session.query(Chest.workouts, Chest.link_to_wo).all(), 
-        backlist=db.session.query(Back.workouts, Back.link_to_wo).all(), 
-        bicepslist=db.session.query(Biceps.workouts, Biceps.link_to_wo).all(), 
-        tricepslist=db.session.query(Triceps.workouts, Triceps.link_to_wo).all(), 
-        shoulderslist=db.session.query(Shoulders.workouts, Shoulders.link_to_wo).all(), 
-        legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
+                           abslist=db.session.query(
+                               Abs.workouts, Abs.link_to_wo).all(),
+                           chestlist=db.session.query(
+                               Chest.workouts, Chest.link_to_wo).all(),
+                           backlist=db.session.query(
+                               Back.workouts, Back.link_to_wo).all(),
+                           bicepslist=db.session.query(
+                               Biceps.workouts, Biceps.link_to_wo).all(),
+                           tricepslist=db.session.query(
+                               Triceps.workouts, Triceps.link_to_wo).all(),
+                           shoulderslist=db.session.query(
+                               Shoulders.workouts, Shoulders.link_to_wo).all(),
+                           legslist=db.session.query(Legs.workouts, Legs.link_to_wo).all())
 
 
 @ app.route("/profile/")
