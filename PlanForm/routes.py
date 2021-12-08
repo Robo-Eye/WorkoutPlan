@@ -381,10 +381,13 @@ def post_completed_form():
     pass
 
 
-@ app.route("/previousworkouts/")
+@ app.get("/previousworkouts/")
 @ login_required
 def previous_workouts():
-    pass
+    wf = WorkoutForm()
+
+    
+    return render_template("previousworkouts.j2", wf=wf, current_user=current_user)
 
 
 @ app.route("/")
