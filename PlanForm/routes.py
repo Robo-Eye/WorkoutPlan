@@ -15,6 +15,7 @@ from flask_login import current_user
 from sqlalchemy.orm.attributes import flag_modified
 from geopy.geocoders import Nominatim
 import geocoder
+from itertools import groupby
 
 import os
 import sys
@@ -264,9 +265,6 @@ def post_blank_form():
     if wf.validate():
         str1 = " "
         areaOfFocusConvert = str1.join(wf.areaOfFocus.data)
-        print(areaOfFocusConvert)
-        userid = db.session.query(User.id)
-        print(userid)
         completed_form = Userform(user=current_user, gender=wf.gender.data, age=wf.age.data,
                                   weight=wf.weight.data, height=wf.height.data,
                                   areaOfFocus=areaOfFocusConvert, goals=wf.goals.data,
@@ -275,8 +273,6 @@ def post_blank_form():
         db.session.commit()
         userformid = db.session.query(
             Userform.id).filter_by(user=current_user).all()
-        print("THIS IS THE TEST ")
-        print(userformid)
         length = length_hint(userformid)
         userformid = userformid[length-1]
         userformid = userformid[0]
@@ -385,12 +381,16 @@ def post_completed_form():
 @ login_required
 def previous_workouts():
     wf = WorkoutForm()
+    # wkouts = Workouts.query.filter_by(user=current_user).all()
+    # print("==================================================")
+    # print(wkouts)
+    # print(wkouts[1])
+    # print(wkouts[2])
     listOfSelectedWO = db.session.query(
         Workouts.abs, Workouts.chest, Workouts.back,
         Workouts.biceps, Workouts.triceps, Workouts.shoulders,
         Workouts.legs).filter_by(user=current_user).all()
     listoflist = [list(x) for x in listOfSelectedWO]
-    resultWO = []
     indivWO = []
     for x in listoflist:
         if(x[0]):
@@ -418,19 +418,24 @@ def previous_workouts():
         if(x[6]):
             legslist = db.session.query(Legs.workouts, Legs.link_to_wo).all()
             indivWO.append(legslist)
-        resultWO.append(indivWO)
-        resultWO.app
+        # resultWO.append(indivWO)
+        indivWO.append("ENDOFWORKOUT")
 
+    # aof = Userform.query.filter_by(user=current_user).all()
+    # print(aof)
     selectedAOF = db.session.query(
         Userform.areaOfFocus).filter_by(user=current_user).all()
     selectedGoal = db.session.query(
         Userform.goals).filter_by(user=current_user).all()
     selectedREPS = db.session.query(
         Userform.numberofsets).filter_by(user=current_user).all()
+
+    # i = (list(g) for _, g in groupby(indivWO, key='ENDOFWORKOUT'.__ne__))
+    # indivWO = [a + b for a, b in zip(i, i)]
     print("_________ OUTPUT TEST ________")
-    print(listOfSelectedWO)
-    print(str(listoflist))
-    print(str(resultWO))
+    # print(listOfSelectedWO)
+    print(listoflist)
+    print(indivWO)
     print(selectedAOF)
     print(selectedGoal)
     print(selectedREPS)
