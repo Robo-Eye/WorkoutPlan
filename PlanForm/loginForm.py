@@ -20,5 +20,9 @@ class RegisterForm(FlaskForm):
 class UpdateInfo(FlaskForm):
     email = EmailField("Old Email: ", validators=[InputRequired(), Email()])
     newEmail = EmailField("New Email: ", validators=[InputRequired(), Email()])
+    submit = SubmitField("Update")
 
+class UpdateUsername(FlaskForm):
+    username = StringField("Old Username: ", validators=[InputRequired()])
+    newUsername = StringField("New Username: ", validators=[InputRequired()])
     submit = SubmitField("Update")
