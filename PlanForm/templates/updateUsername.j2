@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title> Update Email </title>
+        <title> Update Username </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
@@ -53,12 +53,12 @@
         </header>
         <main>
             <div class="container text-center mt-3">
-                <h1>Change Email Address</h1>
+                <h1>Change Username</h1>
                 <form action="#", method="post">
                     <div class="mb-3">
                         {{ form.hidden_tag() }}
-                        <div class="form-label"> {{ form.email.label }}&nbsp; {{ form.email() }} </div>
-                        <div class="form-label"> {{ form.newEmail.label }} {{ form.newEmail() }} </div>
+                        <div class="form-label"> {{ form.username.label }}&nbsp; {{ form.username() }} </div>
+                        <div class="form-label"> {{ form.newUsername.label }} {{ form.newUsername() }} </div>
                         <button class="btn btn-block"> {{ form.submit() }} </button>
                     </div>
                 </form>

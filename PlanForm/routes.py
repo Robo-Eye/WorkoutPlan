@@ -3,7 +3,7 @@ from flask.scaffold import F
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from hashing_examples import UpdatedHasher
-from loginForm import UpdateInfo
+from loginForm import UpdateInfo, UpdateUsername
 from loginForm import RegisterForm
 from loginForm import LoginForm
 from flask import Flask, request, render_template, redirect, url_for, flash
@@ -381,61 +381,10 @@ def post_completed_form():
     pass
 
 
-@ app.get("/previousworkouts/")
+@ app.route("/previousworkouts/")
 @ login_required
 def previous_workouts():
-    wf = WorkoutForm()
-    listOfSelectedWO = db.session.query(
-        Workouts.abs, Workouts.chest, Workouts.back,
-        Workouts.biceps, Workouts.triceps, Workouts.shoulders,
-        Workouts.legs).filter_by(user=current_user).all()
-    listoflist = [list(x) for x in listOfSelectedWO]
-    resultWO = []
-    indivWO = []
-    for x in listoflist:
-        if(x[0]):
-            abslist = db.session.query(Abs.workouts, Abs.link_to_wo).all()
-            indivWO.append(abslist)
-        if(x[1]):
-            chestlist = db.session.query(
-                Chest.workouts, Chest.link_to_wo).all()
-            indivWO.append(chestlist)
-        if(x[2]):
-            backlist = db.session.query(Back.workouts, Back.link_to_wo).all()
-            indivWO.append(backlist)
-        if(x[3]):
-            bicepslist = db.session.query(
-                Biceps.workouts, Biceps.link_to_wo).all()
-            indivWO.append(bicepslist)
-        if(x[4]):
-            tricepslist = db.session.query(
-                Triceps.workouts, Triceps.link_to_wo).all()
-            indivWO.append(tricepslist)
-        if(x[5]):
-            shoulderslist = db.session.query(
-                Shoulders.workouts, Shoulders.link_to_wo).all()
-            indivWO.append(shoulderslist)
-        if(x[6]):
-            legslist = db.session.query(Legs.workouts, Legs.link_to_wo).all()
-            indivWO.append(legslist)
-        resultWO.append(indivWO)
-        resultWO.app
-
-    selectedAOF = db.session.query(
-        Userform.areaOfFocus).filter_by(user=current_user).all()
-    selectedGoal = db.session.query(
-        Userform.goals).filter_by(user=current_user).all()
-    selectedREPS = db.session.query(
-        Userform.numberofsets).filter_by(user=current_user).all()
-    print("_________ OUTPUT TEST ________")
-    print(listOfSelectedWO)
-    print(str(listoflist))
-    print(str(resultWO))
-    print(selectedAOF)
-    print(selectedGoal)
-    print(selectedREPS)
-
-    return render_template("previousworkouts.j2", wf=wf, current_user=current_user)
+    pass
 
 
 @ app.route("/")
@@ -556,29 +505,53 @@ def workoutlist():
 @ app.route("/profile/")
 @ login_required
 def profile():
-    return render_template("profile.j2")
+    return render_template("profile.j2", current_user=current_user)
 
 
-@ app.get("/changeInfo/")
-def get_changeInfo():
+@ app.get("/changeEmail/")
+def get_changeEmail():
     form = UpdateInfo()
-    return render_template("updateInfo.j2", form=form)
+    return render_template("updateInfo.j2", current_user=current_user, form=form)
 
 
-@ app.post("/changeInfo/")
-def post_changeInfo():
+@ app.post("/changeEmail/")
+def post_changeEmail():
     form = UpdateInfo()
     if form.validate():
         # check if existing account has this email
         user = User.query.filter_by(email=form.email.data).first()
         if user is None:
             flash("The Old Email that was submitted does not match your acctount")
-            return redirect(url_for('get_changeInfo'))
+            return redirect(url_for('get_changeEmail'))
         # username and email are both not already being used, create new user
         user.email = form.newEmail.data
         db.session.commit()
-        return render_template("profile.j2", form=form)
+        return render_template("profile.j2", current_user=current_user, form=form)
     else:
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
-        return redirect(url_for('get_changeInfo'))
+        return redirect(url_for('get_changeEmail'))
+
+@ app.get("/changeUsername/")
+def get_changeUsername():
+    form = UpdateUsername()
+    return render_template("updateUsername.j2", current_user=current_user, form=form)
+
+
+@ app.post("/changeUsername/")
+def post_changeUsername():
+    form = UpdateUsername()
+    if form.validate():
+        # check if existing account has this email
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None:
+            flash("The Old Username that was submitted does not match your acctount")
+            return redirect(url_for('get_changeUsername'))
+        # username are both not already being used, create new user
+        user.username = form.newUsername.data
+        db.session.commit()
+        return render_template("profile.j2", current_user=current_user, form=form)
+    else:
+        for field, error in form.errors.items():
+            flash(f"{field}: {error}")
+        return redirect(url_for('get_changeUsername'))
