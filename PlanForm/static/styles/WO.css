@@ -1,0 +1,13 @@
+body{
+    background-color:rgba(0, 0, 0, 0.025);
+}
+.img1 {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.p1 {
+    font-weight: bold;
+}
+

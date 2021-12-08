@@ -3,7 +3,7 @@ from flask.scaffold import F
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from hashing_examples import UpdatedHasher
-from loginForm import UpdateInfo
+from loginForm import UpdateInfo, UpdateUsername
 from loginForm import RegisterForm
 from loginForm import LoginForm
 from flask import Flask, request, render_template, redirect, url_for, flash
@@ -377,7 +377,7 @@ def post_completed_form():
     pass
 
 
-@ app.get("/previousworkouts/")
+@ app.route("/previousworkouts/")
 @ login_required
 def previous_workouts():
     wf = WorkoutForm()
@@ -561,29 +561,53 @@ def workoutlist():
 @ app.route("/profile/")
 @ login_required
 def profile():
-    return render_template("profile.j2")
+    return render_template("profile.j2", current_user=current_user)
 
 
-@ app.get("/changeInfo/")
-def get_changeInfo():
+@ app.get("/changeEmail/")
+def get_changeEmail():
     form = UpdateInfo()
-    return render_template("updateInfo.j2", form=form)
+    return render_template("updateInfo.j2", current_user=current_user, form=form)
 
 
-@ app.post("/changeInfo/")
-def post_changeInfo():
+@ app.post("/changeEmail/")
+def post_changeEmail():
     form = UpdateInfo()
     if form.validate():
         # check if existing account has this email
         user = User.query.filter_by(email=form.email.data).first()
         if user is None:
             flash("The Old Email that was submitted does not match your acctount")
-            return redirect(url_for('get_changeInfo'))
+            return redirect(url_for('get_changeEmail'))
         # username and email are both not already being used, create new user
         user.email = form.newEmail.data
         db.session.commit()
-        return render_template("profile.j2", form=form)
+        return render_template("profile.j2", current_user=current_user, form=form)
     else:
         for field, error in form.errors.items():
             flash(f"{field}: {error}")
-        return redirect(url_for('get_changeInfo'))
+        return redirect(url_for('get_changeEmail'))
+
+@ app.get("/changeUsername/")
+def get_changeUsername():
+    form = UpdateUsername()
+    return render_template("updateUsername.j2", current_user=current_user, form=form)
+
+
+@ app.post("/changeUsername/")
+def post_changeUsername():
+    form = UpdateUsername()
+    if form.validate():
+        # check if existing account has this email
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None:
+            flash("The Old Username that was submitted does not match your acctount")
+            return redirect(url_for('get_changeUsername'))
+        # username are both not already being used, create new user
+        user.username = form.newUsername.data
+        db.session.commit()
+        return render_template("profile.j2", current_user=current_user, form=form)
+    else:
+        for field, error in form.errors.items():
+            flash(f"{field}: {error}")
+        return redirect(url_for('get_changeUsername'))
