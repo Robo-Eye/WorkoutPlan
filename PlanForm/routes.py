@@ -385,8 +385,56 @@ def post_completed_form():
 @ login_required
 def previous_workouts():
     wf = WorkoutForm()
+    listOfSelectedWO = db.session.query(
+        Workouts.abs, Workouts.chest, Workouts.back,
+        Workouts.biceps, Workouts.triceps, Workouts.shoulders,
+        Workouts.legs).filter_by(user=current_user).all()
+    listoflist = [list(x) for x in listOfSelectedWO]
+    resultWO = []
+    indivWO = []
+    for x in listoflist:
+        if(x[0]):
+            abslist = db.session.query(Abs.workouts, Abs.link_to_wo).all()
+            indivWO.append(abslist)
+        if(x[1]):
+            chestlist = db.session.query(
+                Chest.workouts, Chest.link_to_wo).all()
+            indivWO.append(chestlist)
+        if(x[2]):
+            backlist = db.session.query(Back.workouts, Back.link_to_wo).all()
+            indivWO.append(backlist)
+        if(x[3]):
+            bicepslist = db.session.query(
+                Biceps.workouts, Biceps.link_to_wo).all()
+            indivWO.append(bicepslist)
+        if(x[4]):
+            tricepslist = db.session.query(
+                Triceps.workouts, Triceps.link_to_wo).all()
+            indivWO.append(tricepslist)
+        if(x[5]):
+            shoulderslist = db.session.query(
+                Shoulders.workouts, Shoulders.link_to_wo).all()
+            indivWO.append(shoulderslist)
+        if(x[6]):
+            legslist = db.session.query(Legs.workouts, Legs.link_to_wo).all()
+            indivWO.append(legslist)
+        resultWO.append(indivWO)
+        resultWO.app
 
-    
+    selectedAOF = db.session.query(
+        Userform.areaOfFocus).filter_by(user=current_user).all()
+    selectedGoal = db.session.query(
+        Userform.goals).filter_by(user=current_user).all()
+    selectedREPS = db.session.query(
+        Userform.numberofsets).filter_by(user=current_user).all()
+    print("_________ OUTPUT TEST ________")
+    print(listOfSelectedWO)
+    print(str(listoflist))
+    print(str(resultWO))
+    print(selectedAOF)
+    print(selectedGoal)
+    print(selectedREPS)
+
     return render_template("previousworkouts.j2", wf=wf, current_user=current_user)
 
 
