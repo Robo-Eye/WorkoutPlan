@@ -1,3 +1,4 @@
+from operator import length_hint
 from flask.scaffold import F
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
@@ -272,25 +273,34 @@ def post_blank_form():
                                   numberofsets=wf.numberofsets.data)
         db.session.add(completed_form)
         db.session.commit()
-        return redirect(url_for("get_completed_form"))
+        userformid = db.session.query(
+            Userform.id).filter_by(user=current_user).all()
+        print("THIS IS THE TEST ")
+        print(userformid)
+        length = length_hint(userformid)
+        userformid = userformid[length-1]
+        userformid = userformid[0]
+        return redirect(url_for("get_completed_form", plan_id=userformid))
     else:
         for field, error in wf.errors.items():
             flash(f"{field}: {error}")
         return redirect(url_for("get_blank_form"))
 
 
-@app.get('/completedform/')
+@app.get('/completedform/<int:plan_id>')
 @login_required
-def get_completed_form():
+def get_completed_form(plan_id):
     wf = WorkoutForm()
     selectedAOF = db.session.query(
-        Userform.areaOfFocus).filter_by(user=current_user)
+        Userform.areaOfFocus).filter_by(id=plan_id)
     selectedGoal = db.session.query(
-        Userform.goals).filter_by(user=current_user).first()
+        Userform.goals).filter_by(id=plan_id)
     selectedREPS = db.session.query(
-        Userform.numberofsets).filter_by(user=current_user).first()
+        Userform.numberofsets).filter_by(id=plan_id)
     resultGoal = selectedGoal[0]
+    resultGoal = resultGoal[0]
     resultREPS = selectedREPS[0]
+    resultREPS = resultREPS[0]
     stringAOF = selectedAOF[0]
     stringAOF = stringAOF[0]
     resultAOF = stringAOF.split()
@@ -332,16 +342,11 @@ def get_completed_form():
     # listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
     #          (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
 
-    # workouts = db.session.query(Workouts).
-
     listOfSelectedWO = db.session.query(
         Workouts.abs, Workouts.chest, Workouts.back,
         Workouts.biceps, Workouts.triceps, Workouts.shoulders,
-        Workouts.legs).filter_by(user=current_user).first()
+        Workouts.legs).filter_by(id=completed_form.id).first()
 
-    print("-------------- Testing --------------------")
-    print(listOfSelectedWO)
-    print("-------------- End --------------------")
     resultWO = []
     if(listOfSelectedWO[0]):
         abslist = db.session.query(Abs.workouts, Abs.link_to_wo).all()
@@ -373,6 +378,12 @@ def get_completed_form():
 @ app.post('/completedform/')
 @ login_required
 def post_completed_form():
+    pass
+
+
+@ app.route("/previousworkouts/")
+@ login_required
+def previous_workouts():
     pass
 
 
