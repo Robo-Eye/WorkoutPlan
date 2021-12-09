@@ -92,6 +92,7 @@ class Userform(db.Model):
     goals = db.Column(db.Unicode, nullable=False)
     numberofsets = db.Column(db.Integer, nullable=False)
 
+
 class Workouts(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     woid = db.Column(db.Integer, db.ForeignKey('Users.id'))
@@ -103,6 +104,7 @@ class Workouts(db.Model):
     triceps = db.Column(db.Boolean)
     shoulders = db.Column(db.Boolean)
     legs = db.Column(db.Boolean)
+
 
 class Abs(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -386,13 +388,6 @@ def current_workout():
     stringAOF = selectedAOF[0]
     stringAOF = stringAOF[0]
     resultAOF = stringAOF.split()
-    abs = False
-    chest = False
-    back = False
-    biceps = False
-    triceps = False
-    shoulders = False
-    legs = False
     listAOF = []
     for x in resultAOF:
         if (x.lower() == "abs"):
@@ -576,7 +571,7 @@ def post_changeEmail():
         # check if existing account has this email
         user = User.query.filter_by(email=form.email.data).first()
         if user is None:
-            flash("The Old Email that was submitted does not match your acctount")
+            flash("The old email that was submitted does not match your account")
             return redirect(url_for('get_changeEmail'))
         # username and email are both not already being used, create new user
         user.email = form.newEmail.data
@@ -601,7 +596,7 @@ def post_changeUsername():
         # check if existing account has this email
         user = User.query.filter_by(username=form.username.data).first()
         if user is None:
-            flash("The Old Username that was submitted does not match your acctount")
+            flash("The old username that was submitted does not match your account")
             return redirect(url_for('get_changeUsername'))
         # username are both not already being used, create new user
         user.username = form.newUsername.data

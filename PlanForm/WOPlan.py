@@ -1,4 +1,4 @@
-#File was used to test form seperate from entire site
+# File was used to test form seperate from entire site, not implemented, please ignore.
 import flask
 import os
 from WOPlanForm import WorkoutForm
