@@ -91,8 +91,6 @@ class Userform(db.Model):
     areaOfFocus = db.Column(db.Unicode, nullable=False)
     goals = db.Column(db.Unicode, nullable=False)
     numberofsets = db.Column(db.Integer, nullable=False)
-    # workouts = db.relationship("Workouts", backref="Userform")  # this one
-
 
 class Workouts(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -105,9 +103,6 @@ class Workouts(db.Model):
     triceps = db.Column(db.Boolean)
     shoulders = db.Column(db.Boolean)
     legs = db.Column(db.Boolean)
-
-    # userform_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
-
 
 class Abs(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -150,8 +145,8 @@ class Legs(db.Model):
     workouts = db.Column(db.Unicode)
     link_to_wo = db.Column(db.Unicode)
 
-
-# db.drop_all()  # for testing
+# added to populate the db with workouts once then commented out
+# db.drop_all()
 # db.create_all()
 
 # multiple_abs = [
@@ -336,8 +331,6 @@ def get_completed_form(plan_id):
                               biceps=biceps, triceps=triceps, shoulders=shoulders, legs=legs)
     db.session.add(completed_form)
     db.session.commit()
-    # listAOF = ((abs, "abs"), (chest, "chest"), (back, "back"), (biceps, "biceps"),
-    #          (triceps, "triceps"), (shoulders, "shoulders"), (legs, "legs"))
 
     listOfSelectedWO = db.session.query(
         Workouts.abs, Workouts.chest, Workouts.back,
@@ -370,12 +363,6 @@ def get_completed_form(plan_id):
         resultWO.append(legslist)
 
     return render_template("plancreated.j2", wf=wf, listAOF_resultWO=zip(listAOF, resultWO), selectedGoal=resultGoal, selectedREPS=resultREPS)
-
-
-@ app.post('/completedform/')
-@ login_required
-def post_completed_form():
-    pass
 
 
 @ app.route("/currentworkout/")
@@ -453,72 +440,6 @@ def current_workout():
         resultWO.append(legslist)
     db.session.commit()
     return render_template("currentworkout.j2", listAOF_resultWO=zip(listAOF, resultWO), selectedGoal=resultGoal, selectedREPS=resultREPS)
-
-# Couldnt get working in time, poor data structure
-# @ app.route("/previousworkouts/")
-# @ login_required
-# def previous_workouts():
-#     wf = WorkoutForm()
-#     # wkouts = Workouts.query.filter_by(user=current_user).all()
-#     # print("==================================================")
-#     # print(wkouts)
-#     # print(wkouts[1])
-#     # print(wkouts[2])
-#     listOfSelectedWO = db.session.query(
-#         Workouts.abs, Workouts.chest, Workouts.back,
-#         Workouts.biceps, Workouts.triceps, Workouts.shoulders,
-#         Workouts.legs).filter_by(user=current_user).all()
-#     listoflist = [list(x) for x in listOfSelectedWO]
-#     indivWO = []
-#     for x in listoflist:
-#         if(x[0]):
-#             abslist = db.session.query(Abs.workouts, Abs.link_to_wo).all()
-#             indivWO.append(abslist)
-#         if(x[1]):
-#             chestlist = db.session.query(
-#                 Chest.workouts, Chest.link_to_wo).all()
-#             indivWO.append(chestlist)
-#         if(x[2]):
-#             backlist = db.session.query(Back.workouts, Back.link_to_wo).all()
-#             indivWO.append(backlist)
-#         if(x[3]):
-#             bicepslist = db.session.query(
-#                 Biceps.workouts, Biceps.link_to_wo).all()
-#             indivWO.append(bicepslist)
-#         if(x[4]):
-#             tricepslist = db.session.query(
-#                 Triceps.workouts, Triceps.link_to_wo).all()
-#             indivWO.append(tricepslist)
-#         if(x[5]):
-#             shoulderslist = db.session.query(
-#                 Shoulders.workouts, Shoulders.link_to_wo).all()
-#             indivWO.append(shoulderslist)
-#         if(x[6]):
-#             legslist = db.session.query(Legs.workouts, Legs.link_to_wo).all()
-#             indivWO.append(legslist)
-#         # resultWO.append(indivWO)
-#         indivWO.append("ENDOFWORKOUT")
-
-#     # aof = Userform.query.filter_by(user=current_user).all()
-#     # print(aof)
-#     selectedAOF = db.session.query(
-#         Userform.areaOfFocus).filter_by(user=current_user).all()
-#     selectedGoal = db.session.query(
-#         Userform.goals).filter_by(user=current_user).all()
-#     selectedREPS = db.session.query(
-#         Userform.numberofsets).filter_by(user=current_user).all()
-
-#     # i = (list(g) for _, g in groupby(indivWO, key='ENDOFWORKOUT'.__ne__))
-#     # indivWO = [a + b for a, b in zip(i, i)]
-#     print("_________ OUTPUT TEST ________")
-#     # print(listOfSelectedWO)
-#     print(listoflist)
-#     print(indivWO)
-#     print(selectedAOF)
-#     print(selectedGoal)
-#     print(selectedREPS)
-
-#     return render_template("previousworkouts.j2", wf=wf, current_user=current_user)
 
 
 @ app.route("/")
