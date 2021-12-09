@@ -57,17 +57,17 @@
 
     <div class="container mt-3">
         {% if current_user.is_authenticated %}
-            <h1>Welcome {{current_user.username}}!</h1>
+            <h1>Welcome back {{current_user.username}}!</h1>
         {% else %}
-            <h1>Welcome Anonymous User!</h1>
+            <h1>Welcome To The Best Workout Plan Creator!</h1>
         {% endif %}
 
         <p class="p1">Welcome to Workout Creator! Create your user-based workout regimen that is tailored to your personal goals.
-        We tried to cut out the personal trainer middle man providing a workout plan for everyone. Fill out our Personalized Workout Form
-        and you will be on your way.
+        We tried to cut out the personal trainer middle man by providing a workout plan for everyone. Fill out our Personalized Workout Form
+        and you will be on your way to reach your workout goals!
         </p>
-        <h5><a href = "/workoutform/" class = "text-decoration-none pb-3">Create Personalized Workout</a></h3>
-        <p>Is it a good day to workout outside? Check the local weather before you go!</P>
+        <h5><a href="/workoutform/" button type="button" class="btn btn-primary" href="/workoutform/">Create a Personalized Workout</a></h5>
+        <p>Is it a good day to workout outside? Check out the local weather before you go!</P>
     </div>
     <div id="weather" class="container mt-3 mb-5 border border-dark">
         <input type="hidden" id="lat-long" value="{{lat}},{{long}}">
